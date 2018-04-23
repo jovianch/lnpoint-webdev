@@ -1,1 +1,2 @@
-# lnpoint-webdev
+# lnpoint web development
+## http://lnpoint.pythonanywhere.com/
