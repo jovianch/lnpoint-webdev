@@ -4,7 +4,7 @@ Lnpoint adalah sharing platform untuk berbagi pengalaman dan pengetahuan yang da
 
 
 ## Untuk penggunaan data mockup silahkan kunjungi
-## http://lnpoint.pythonanywhere.com/
+## https://lnpoint.pythonanywhere.com/
 
 
 ## Untuk production site yang sudah dapat digunakan secara luas silahkan kunjungi
