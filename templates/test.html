@@ -1,0 +1,534 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %} Available soon! {% endblock %}
+
+{% block header %} Available soon! {% endblock %}
+
+{% block content %}
+    <div class="w-container">
+    	<!-- stories -->
+	    <div class="w-col">
+	      <div class="panel panel-body info-section for-stories">
+
+	      <!-- content container -->
+	      {% if flavour != 'mobile' %}
+	        <section class="ln_oc_section ln_oc_section_scroll">
+	      {% else %}
+	        <section class="ln_oc_section">
+	      {% endif %}
+
+	          <h2 class="ln_oc_section_heading">
+	            <span>Open Classes</span>
+	          </h2>
+
+	          <!-- open classes -->
+	          {% if flavour != 'mobile' %}
+	            <div class="ln_oc_contents ln_oc_contents_scroll">
+	          {% else %}
+	            <div class="ln_oc_contents">
+	          {% endif %}
+	          
+	            <div class="ln_oc_contents_view">
+
+	              {% if flavour != 'mobile' %}
+	                <div id="style-1" class="ln_oc_contents_container ln_oc_contents_container_scroll"> <!--style="padding-left-right generated"-->
+	              {% else %}
+	                <div class="ln_oc_contents_container"> <!--style="padding-left-right generated"-->
+	              {% endif %}
+
+	                <!-- edit open class -->
+	                <div class="ln_oc">
+	                  <button class="ln_oc_self_btn">
+	                    <span class="ln_oc_img_container ln_oc_self_img_container" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/alvinjunianto-20171006140504.png);"></span>
+	                    <div class="ln_oc_label">my class</div>
+	                    <div class="ln_oc_self_icon"></div>
+	                  </button>
+	                </div>
+
+	                <!-- following open class -->
+	                <div class="ln_oc">
+	                  <a class="ln_oc_a">
+	                    <div class="ln_oc_container">
+	                      <canvas class="ln_oc_" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+	                      <span class="ln_oc_img_container ln_upd" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/alsolskjaer-20170929172249.png);"></span>
+	                    </div>
+	                    <div class="ln_oc_label">alsolkajer</div>
+	                  </a>
+	                </div>
+
+	                <div class="ln_oc">
+	                  <a class="ln_oc_a">
+	                    <div class="ln_oc_container">
+	                      <canvas class="_15vpm" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+	                      <span class="ln_oc_img_container ln_upd" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/amandaathaya-20171008042938.png);"></span>
+	                    </div>
+	                    <div class="ln_oc_label">amanda</div>
+	                  </a>
+	                </div>
+
+	                <div class="ln_oc">
+	                  <a class="ln_oc_a">
+	                    <div class="ln_oc_container">
+	                      <canvas class="_15vpm" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+	                      <span class="ln_oc_img_container" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/gusti_triandi-20171008051243.png);"></span>
+	                    </div>
+	                    <div class="ln_oc_label">gustitriandi</div>
+	                  </a>
+	                </div>
+
+	                <div class="ln_oc">
+	                  <a class="ln_oc_a">
+	                    <div class="ln_oc_container">
+	                      <canvas class="_15vpm" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+	                      <span class="ln_oc_img_container" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/ranggarppb-20171012170151.png);"></span>
+	                    </div>
+	                    <div class="ln_oc_label">ranggaputrapertama</div>
+	                  </a>
+	                </div>
+
+	                <div class="ln_oc">
+	                  <a class="ln_oc_a">
+	                    <div class="ln_oc_container">
+	                      <canvas class="_15vpm" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+	                      <span class="ln_oc_img_container" style="background-image:url(https://d2wefhtvovcf6q.cloudfront.net/profiles/denikartika-20171004024427.png);"></span>
+	                    </div>
+	                    <div class="ln_oc_label">deni</div>
+	                  </a>
+	                </div>
+
+	              </div>
+	            </div>
+	          </div>
+
+	        </section>
+
+	      </div>
+	    </div>
+
+	    <!-- activity detail post -->
+	    <div class="w-col">
+	        <div class="panel card-body ln_act_full">
+		        <a href="{{ class.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+		            <div class="card-top-image" style="background: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/alvinjunianto-20171006140504.png)
+		            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+		            <div class="card-top-text"> alvinjunianto </div>
+		        </a>
+
+		        <div class="w-col col-xs-12 ">
+		    		<div class="act-img" style="background-image: url(../static/image/photo/sample_thumb2.jpg)"></div>
+		      	</div>
+
+		      	<section class="ln_act_thum_prop">
+					<a class="ln_thum_like liked" role="button" aria-disabled="false">
+						<span class="like_img liked">Like</span>
+					</a>
+					<a class="ln_thum_comment" role="button">
+						<span class="comment_img">Comment</span>
+					</a>
+					<a class="ln_thum_rate" href="#" role="button" aria-disabled="false">
+						<span class="rate_img">4.1</span>
+					</a>
+				</section>
+				<section class="ln_act_thum_count">
+					<div class="ln_count_container">
+						<a class="ln_thum_likes" >
+							<span>1,893</span> likes
+						</a>
+						&nbsp;&nbsp;
+						<a class="ln_thum_comments">
+							<span>75</span> comments
+						</a>
+					</div>
+				</section>
+
+		      	<div class="w-col col-xs-12 " style="margin-top: 7px;">
+					<input id="tab1" type="radio" name="tabs" checked>
+					<label class="tab_title" for="tab1">Held</label>
+
+					<input id="tab2" type="radio" name="tabs">
+					<label class="tab_title" for="tab2">Planed</label>
+
+					<section id="content1" class="panel-body">
+						<div class="card-class class-description-list ln_act_title">
+			        		<strong> [ Nongkrong Berfaedah ] </strong>
+			        	</div>
+
+						<div class="card-class class-description-list ln_act_desc">
+		                  Pengalaman yang sangat menyenangkan. Belajar di tempat makan favorit bersama anak anak magang dan saling berbagi pengalaman dan pengetahuannya di bidang masing masing.
+		                  <br>
+		                  Ada yang sangat tertarik dengan bidang marketing, ada yang sangat tertarik dengan bidang teknis dan ada juga yang sangat antusias mengenai bidang keuangan. Semua bidang kami diskusikan dan kami menyadari ternyata semuanya berhubungan. Setiap bidang memiliki peran yang sangat penting dan dapat saling menunjang guna kemajuan bersama.
+		                  <br><br>
+		                  See you next week guys!
+				        </div>
+
+				        <div class="card-class tag-container">
+				        	#rapat #lnpointforlyfe #sharingsession
+				        </div>
+					</section>
+
+					<section id="content2" class="panel-body ln_act">
+						<div class="card-class class-description-list ln_act_desc">
+			                  Di kelas saya kamu akan belajar tentang kalkulus dasar, semua materi kalkulus bab 1 dan bab 2. Akan terdapat latihan soal berdasarkan UTS tahun tahun sebelumnya dan pembahasan dijelaskan di kelas ini.
+			            </div>
+			            <div class="card-class class-properties">
+			              <div class="w-col col-xs-6">
+			                  <i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Thu, 22 March 2018</strong> <br>
+			                  <i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>22:55 WIB</strong> <br>
+			                  <i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR 150,000</strong> <br>             
+			              </div>
+			              <div class="w-col col-xs-6">
+			                <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+			                <div class="ln_act_loc">Cafe Halaman, Jl. Dayang Sumbi, Bandung </div>
+			                <a target="_blank" href="http://maps.google.com/maps?q={{ class.location_latitude }},{{ class.location_longitude }}">
+			                  <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+			                  <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+			                </a><br>
+			              </div>
+			            </div>
+			            <div class="card-class"><br><br><br><br><br>
+			                  <div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+			                  <div class="ln_act_members_container">
+			                    <div class="ln_oc ln_act_members_1">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/ranggarppb-20171012170151.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/denikartika-20171004024427.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/amandaathaya-20171008042938.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/gusti_triandi-20171008051243.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/fahmi123456-20171007034033.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container">
+			                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/alvinjunianto-20171006140504.png)">
+			                          </span>
+			                        </div>
+			                    </div>
+			                    <div class="ln_oc ln_act_members">
+			                        <div class="ln_oc_container ln_act_extra_members">
+			                          <span class="">
+			                            <b>+7 more</b> 
+			                          </span>
+			                        </div>
+			                    </div>
+			                  </div>
+			            </div>
+					</section>
+
+		      	</div>
+
+		        
+	        	<div class="card-class ln_full_comment">
+		        	<ul class="ln_comments_container">
+						<a class="ln_cmt_more" href="#" role="button">Load more comments</a>
+
+						<li class="ln_comment">
+							<a class="ln_commenter" title="" href="">cornelius.aldo</a>
+							<span>belom siap pak</span>
+						</li>
+						<li class="ln_comment">
+							<a class="ln_commenter" title="" href="">gustitriandi</a>
+							<span>woe, bang kapan kita meeting lagi ni? next kita betutu lah ya. tapi harus semua dateng</span>
+						</li>
+						<li class="ln_comment">
+							<a class="ln_commenter" title="" href="">alsolskjaer</a>
+							<span>ya kita siap siap aja lah ya, yaudah.</span>
+						</li>
+					</ul>
+
+					<form method="POST" enctype=multipart/form-data action="" autocomplete="off">
+	                <div class="card-chat-sending">
+	                    <div class="card-chat-sending-textbox">
+	                        <input class="form-control form-chat" id="id_message" name="message" placeholder="add comment here..." type="text" required="">
+	                    </div>
+	                    <button type="submit" class="card-chat-btn-send"><i class="fa fa-send" style="color:#fff; margin-left: -2px;" aria-hidden="true"></i></button>
+	                </div>
+                </form>
+	          	</div>
+	        </div>
+	    </div>
+
+	    <!-- activities -->
+	    <div class="w-col">
+	        <div class="panel card-body ln_act">
+	          <a href="" class="panel-top card-top-list panel-body">
+	            <div class="card-top-image" style="background: url('https://d2wefhtvovcf6q.cloudfront.net/profiles/alsolskjaer-20170929172249.png')
+	            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+	            <div class="card-top-text">
+	             <p>Mathematic Tutorial Activity
+	               <br><span class="ln_act_owner">by Al Solskjaer</span>
+	             </p>
+	            </div>
+	         </a>
+	         <div class="panel-body">
+	            <div class="card-class class-description-list ln_act_desc">
+	                  Di kelas saya kamu akan belajar tentang kalkulus dasar, semua materi kalkulus bab 1 dan bab 2. Akan terdapat latihan soal berdasarkan UTS tahun tahun sebelumnya dan pembahasan dijelaskan di kelas ini.
+	            </div>
+	            <div class="card-class class-properties">
+	              <div class="w-col col-xs-6">
+	                  <i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Thu, 22 March 2018</strong> <br>
+	                  <i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>22:55 WIB</strong> <br>
+	                  <i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR 150,000</strong> <br>             
+	              </div>
+	              <div class="w-col col-xs-6">
+	                <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+	                <!-- <br>{{ class.location_name|title }}<br> -->
+	                <div class="ln_act_loc">Cafe Halaman, Jl. Dayang Sumbi, Bandung </div>
+	                <a target="_blank" href="http://maps.google.com/maps?q={{ class.location_latitude }},{{ class.location_longitude }}">
+	                  <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+	                  <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+	                </a><br>
+	              </div>
+	            </div>
+	            <div class="card-class"><br><br><br><br><br>
+	                  <div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+	                  <div class="ln_act_members_container">
+	                    <div class="ln_oc ln_act_members_1">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/ranggarppb-20171012170151.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/denikartika-20171004024427.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/amandaathaya-20171008042938.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/gusti_triandi-20171008051243.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/fahmi123456-20171007034033.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container">
+	                          <span class="ln_oc_img_container" style="background-image: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/alvinjunianto-20171006140504.png)">
+	                          </span>
+	                        </div>
+	                    </div>
+	                    <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container ln_act_extra_members">
+	                          <span class="">
+	                            <b>+7 more</b> 
+	                          </span>
+	                        </div>
+	                    </div>
+	                  </div>
+	            </div>
+	            <div class="card-class class-button">
+	                <a href="{{ class.partner.get_absolute_url }}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+	                style="background-color: #03C9A9; !important;">Join Activity</a>
+	            </div>
+	            </div>
+	        </div>
+	    </div>
+
+	    <!-- activity thumbnails post -->
+		<div class="w-col">
+	        <div class="panel card-body ln_act_thumb">
+		        <a href="{{ class.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+		            <div class="card-top-image" style="background: url(https://d2wefhtvovcf6q.cloudfront.net/profiles/ranggarppb-20171012170151.png)
+		            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+		            <div class="card-top-text"> ranggaputra </div>
+		        </a>
+
+		        <div class="w-col col-xs-12 ">
+		    		<div class="act-img" style="background-image: url(../static/image/photo/sample_thumb.jpg)"></div>
+		      	</div>
+
+		      	<section class="ln_act_thum_prop">
+					<a class="ln_thum_like liked" role="button" aria-disabled="false">
+						<span class="like_img liked">Like</span>
+					</a>
+					<a class="ln_thum_comment" href="#" role="button">
+						<span class="comment_img">Comment</span>
+					</a>
+					<a class="ln_thum_rate" href="#" role="button" aria-disabled="false">
+						<span class="rate_img">4.5</span>
+					</a>
+				</section>
+
+				<section class="ln_act_thum_count">
+					<div class="ln_count_container">
+						<a class="ln_thum_likes" href="#">
+							<span>2,018</span> likes
+						</a>
+						&nbsp;&nbsp;
+						<a class="ln_thum_comments" href="#">
+							<span>18</span> comments
+						</a>
+					</div>
+				</section>
+
+		        <div class="panel-body">
+		        	<div class="card-class class-description-list ln_act_title">
+		        		<strong> [ Kimia Asique ] </strong>
+		        	</div>
+		          
+		          	<div class="card-class class-description-list ln_act_desc">
+			                  Pengalaman yang sangat menyenangkan. Belajar di tempat makan favorit bersama anak anak magang dan saling berbagi pengalaman dan pengetahuannya di bidang masing masing.
+			                  <br>
+			                  Ada yang sangat tertarik dengan bidang marketing, ada yang sangat tertarik dengan bidang teknis dan ada juga yang sangat antusias mengenai bidang keuangan. Semua bidang kami diskusikan dan kami menyadari ternyata semuanya berhubungan. Setiap bidang memiliki peran yang sangat penting dan dapat saling menunjang guna kemajuan bersama.
+			                  <br><br>
+			                  See you next week guys!
+			        </div>
+
+			        <div class="card-class tag-container">
+			        	#kimia #belajarbareng #sharingsession
+			        </div>
+		          
+		            <div class="card-class class-button">
+		                <a href="{{ class.partner.get_absolute_url }}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+		                style="background-color: #03C9A9; !important;">View Activity</a>
+		            </div>
+		        </div>
+	        </div>
+	    </div>
+
+    	<!-- post activity -->
+	    <div class="w-col">
+	      <div class="panel panel-body info-section ln_upload_act">
+	      	<form>
+		      	<!-- preview -
+		      	<div class="card-class">
+		      		<div class="act-upl-img" style=""><span style="opacity:0.3;">put an image of your activity</span></div>
+		      	</div>
+				-->
+
+		      	<!-- <div>{{ profile_form.avatar }}</div> -->
+		      	<div><input id="id_act_img" name="act_img" style="display: none;" type="file"></div>
+
+		      	<div class="card-class class-button act-img-upl-container">
+	                <a id="id_act_upl_btn" href="#" class="btn btn-success btn-block btn-profile btn-up btn-stretch">
+	                <i class="fa fa-upload" style="color: grey" aria-hidden="true"></i>
+	                	Upload Image
+	            	</a>
+	            </div>
+
+	            <div class="card-class">
+	                <textarea class="form-control" cols="40" id="id_act_description" name="description" placeholder="Write caption here..." rows="5" required=""></textarea>
+	            </div>
+
+	            <div class="form-group">
+	                <div>
+	                    <input type="submit" value="POST" class="card-btn-submit">
+	                </div>
+	            </div>
+	        </form>
+	      </div>
+	  	</div>
+
+    </div>
+
+    <!-- empty field
+    <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default card-body" style="height:390px">
+                <div class="panel-content-left panel-content-message">
+                    Put code here for test 
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+
+    <!-- for description shortener -->
+    <script type="text/javascript">
+    $(function(){ 
+      $('.ln_act_desc').each(function(event){ 
+        var max_length = 150; 
+
+        if($(this).html().length > max_length){ 
+          var short_content   = $(this).html().substr(0,max_length); 
+          var long_content  = $(this).html().substr(max_length);
+
+          $(this).html(short_content+
+                 '<a href="#" class="ln_read_more"><br/>&nbsp;&nbsp;read more..</a>'+
+                 '<span class="more_text" style="display:none;">'+long_content+'</span>'); 
+                 
+          $(this).find('a.ln_read_more').click(function(event){ 
+     
+            event.preventDefault(); 
+            $(this).hide(); 
+            $(this).parents('.ln_act_desc').find('.more_text').show(); 
+          });
+        }
+        
+      });
+     
+    });
+    </script>
+
+    <!-- for upload btn -->
+    <script type="text/javascript">
+    	$("#id_act_upl_btn").click(function(){
+    		$("#id_act_img").click();
+    	});
+    </script>
+
+    <!-- for like -->
+    <script type="text/javascript">
+    	$(".ln_thum_like").click(function(){
+    		
+    		if ( $(this).hasClass( "liked" ) ) {
+    			$(this).removeClass('liked');
+    		} else {
+    			$(this).addClass('liked');
+    		}
+
+    	});
+    </script>
+
+    <script type="text/javascript">
+		function openCity(evt, cityName) {
+		    var i, tabcontent, tablinks;
+		    tabcontent = document.getElementsByClassName("tabcontent");
+		    for (i = 0; i < tabcontent.length; i++) {
+		        tabcontent[i].style.display = "none";
+		    }
+		    tablinks = document.getElementsByClassName("tablinks");
+		    for (i = 0; i < tablinks.length; i++) {
+		        tablinks[i].className = tablinks[i].className.replace(" active", "");
+		    }
+		    document.getElementById(cityName).style.display = "block";
+		    evt.currentTarget.className += " active";
+		}
+	</script>
+
+{% endblock %}

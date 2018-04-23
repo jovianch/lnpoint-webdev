@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title_tag %}Change Password | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1> Tutup Akun </h1>
+
+<div class="w-form">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Tutup" class="hol-tran-btn w-button">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Welcome Back! {% endblock %}
+
+{% block header %} Welcome Back! {% endblock %}
+
+{% block content %}
+        <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default card-body" style="height:390px">
+                <div class="panel-content-left panel-content-message">
+                    <div class="card-home-apps">
+                        <h4><b>Hi {{ user.fullname|title }},</b> Let's try out lnpoint new notification features 📱 😄</h4>
+                        <hr>    
+                        <div class="card-form-label-info">
+                            Fitur baru di lnpoint! sekarang kamu ga perlu takut ke skip chat di lnpoint, cukup isi no hp kamu, 
+                              dan notifikasi akan terkirim ke HP kamu jika ada pesan yang masuk
+                           </div>
+                        <div class="card-form-label">
+                            Input your phone number
+                        </div>
+                       <form method="POST" class="form-horizontal">
+                            {% csrf_token %}
+                            <div class="card-form-input">
+                                {{ form.phone_number }}
+                                {{ form.phone_number.errors }}
+                            </div>
+                            <input type="submit" value="Save" class="btn btn-success btn-block btn-profile btn-up btn-stretch" style="background-color:#F62459">
+                            {{ form.non_field_errors }}
+                        </form>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

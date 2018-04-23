@@ -1,0 +1,43 @@
+{% extends "layout_landingpage.html" %}{% load i18n %}
+{% load static from staticfiles %}
+
+{% block content %}
+        <div class="main-container">
+            <a id="cover-form-4" class="in-page-link"></a>
+            <section class="imagebg height-100 minh-100" data-overlay="7" id="home">
+                <div class="background-image-holder"><img alt="background" src="{% static 'image/architecture-3.jpg' %}"></div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-7 mt--2">
+                            <h2><b>Hi,</b> welcome to sharing society</h2>
+                            <p>Dengan cara yang simple, tempat dan harga yang fleksibel, sekarang kamu dapat berbagi pengetahuan dan pengalaman dengan membuat kelasmu sendiri. </p>
+                            <br>
+                            <a class="btn btn-round btn--sm type--uppercase" href="{% url 'about' %}"> <span class="btn__text">
+                                    Learn More</span> </a>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-2 mt-mobile-1">
+                            <div class=" boxed formbox boxed--lg bg--white boxed--border boxed-form login-box">
+                                <h3 class="text-center">Sign In</h3>
+                                <form method="POST">
+                                 {% csrf_token %}
+                                    <div class="row">
+                                        {% for field in form %}
+                                        <div class="col-xs-12"> {{ field }} </div>
+                                        {% endfor %}
+                                        {% if form.errors %}
+                                        <div class="col-xs-12"> {{ form.username.errors }} {{ form.non_field_errors }}</div>
+                                        {% endif %}
+                                        <div class="col-xs-12"> <button type="submit" class="btn btn-cust-1 btn--primary type--uppercase">Sign In</button> </div>
+                                        <div class="col-xs-12 mb--2"> <!--span class="type--fine-print"><a href="#">Forget Password?</a></span--> </div>
+
+                                    </div>
+                                </form>
+                                <div class="foot text-center">
+                                	<span class="type--fine-print">Didn't have an account?<a href="{% url 'accounts:signup' %}"> Sign up here</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock content %}

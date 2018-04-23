@@ -1,0 +1,717 @@
+{% extends "layout.html" %}
+{% block title_tag %}Lnpoint | @{{profile.user.username}}{% endblock %}
+{% load static %}
+
+{% block header %} {{ block.super }} Home {% endblock %}
+
+{% block content %}
+<!-- PROFILE -->
+  <div class="w-container">
+
+      <!-- Onboarding Screen -->
+      
+        <div class='onboarding-container'>
+          <div class='walkthrough show reveal'>
+            <div class='walkthrough-pagination'>
+              <a class='dot active'></a>
+              <a class='dot'></a>
+              <a class='dot'></a>
+              <a class='dot'></a>
+            </div>
+            <div class='walkthrough-body'>
+              <ul class='screens animate'>
+                <li class='screen active'>
+                  <div class='media logo'>
+                    <img class='logo' src='../static/image/logotulisan2.png' style="margin-top:55px; width:100px;">
+                  </div>
+                  <h3>
+                    <br>Welcome to Lnpoint!</br>
+                  </h3>
+                  <p>Sebelum memulai perjalanan sharing kamu. Yuk berkenalan dengan fitur-fitur lnpoint!</p>
+                </li>
+                <li class='screen'>
+                  <div class='media logo'>
+                    <img class='logo' src='../static/image/open-class.png'>
+                  </div>
+                  <h3>
+                    <br>Open Class</br>
+                  </h3>
+                  <p>Open Class atau "Kelas Terbuka". Disini kamu bisa menuliskan kelas apa yang bisa kamu buat. C'mon show and share your skill to the world!</p>
+                </li>
+                <li class='screen'>
+                  <div class='media logo'>
+                    <img class='logo' src='../static/image/plan-act.png'>
+                  </div>
+                  <h3>
+                    Plan
+                    <br>Activity</br>
+                  </h3>
+                  <p>Ayo buat rencana aktivitas yang mau kamu lakukan supaya  teman-teman mu tau dan bisa ikutan juga! :)</p>
+                </li>
+                <li class='screen'>
+                  <div class='media logo'>
+                    <img class='logo' src='../static/image/pos-act.png' style="width:100px; margin-top:5px;">
+                  </div>
+                  <h3>
+                    Post
+                    <br>Activity</br>
+                  </h3>
+                  <p>Aktivitas kamu sudah sekesai? Yuk share tentang pengalaman aktivitas tersebut dengan foto seru selama kamu beraktivitas :)</p>
+                </li>
+              </ul>
+              <button class='prev-screen'>
+                <i class='fa fa-angle-left'></i>
+              </button>
+              <button class='next-screen'>
+                <i class='fa fa-angle-right'></i>
+              </button>
+            </div>
+            <div class='walkthrough-footer'>
+              <button class='button next-screen'>Next</button>
+              <button class='button finish close' disabled='true'>Finish</button>
+            </div>
+          </div>
+        </div>
+
+      {% if not profile.user.is_verified %}
+
+        <div class="w-col">
+          <div class="panel panel-body info-section">
+            <span class="font-bold">Hai {{ profile.user.fullname|title }}</span>, welcome to lnpoint 😄<br>  
+            <span style="font-size:13px;"> Let's get started!<hr><a href="https://line.me/R/ti/p/%40unl0998g"><span style="font-size:11px;text-decoration:underline;color:black"> have question? contact us via LINE</span></a></span>
+          </div>
+        </div>
+
+        <div class="w-col">
+          <div class="panel panel-body card-body">
+            <div class="card-home-apps">
+              <h4><b>Have something to share?</b> </h4>
+              <div class="card-info">
+                  Ingin berbagi pengetahuan dan pengalamanmu agar bermanfaat untuk orang lain? 😃<br>
+                  <hr class="margin-10">
+                  Sekarang kamu bisa! 🎉 <br>
+                  Jadilah partner terverifikasi lnpoint sekarang post open classmu untuk berbagi, dan dapatkan uang tambahan
+              </div>    
+            </div>
+            <div class="card-button">
+                <a href="{% url 'accounts:verify' profile.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch-s" 
+                style="background-color: #F62459; !important;">Partner verification</a>
+            </div>
+          </div>        
+        </div>
+      {% else %}
+
+        <div class="w-col">
+          <div class="panel panel-body info-section">
+            <span class="font-bold">Hai {{ profile.user.fullname|title }}</span>, welcome back! 😃<br>  
+            <span style="font-size:13px;"> discover local open class or make your own <hr><a href="https://line.me/R/ti/p/%40unl0998g"><span style="font-size:11px;text-decoration:underline;color:black"> have question? contact us via LINE </span></a></span>
+          </div>
+        </div>
+              <!--div class="w-col">
+                <div class="panel panel-body card-body">
+                  <div class="card-home-apps">
+                    <h4><b>Congratulations {{ profile.user.fullname|title }},</b> You are now verified <i class="fa fa-check-circle verified-icon" aria-hidden="true"></i></h4>
+                    
+                    <div class="card-info">
+                      Kamu dapat membuka open class sesuai keinginan kamu sendiri. Ayo post open class mu dan mulai berbagi<br>
+                    </div>    
+                  </div>
+                  <div class="card-button">
+                      <a href="" class="btn btn-success btn-block btn-profile btn-up btn-stretch-s"
+                      style="background-color: #F62459; !important;">Post an open class</a>
+                  </div>        
+                </div>
+              </div-->
+      {% endif %}
+
+        <div class="w-col">
+          <div class="panel panel-body info-section for-stories">
+
+          <!-- content container -->
+          {% if flavour != 'mobile' %}
+            <section class="ln_oc_section ln_oc_section_scroll">
+          {% else %}
+            <section class="ln_oc_section">
+          {% endif %}
+
+              <h2 class="ln_oc_section_heading">
+                <span>Activities and Open class nearby</span>
+              </h2>
+
+              <!-- open classes -->
+              {% if flavour != 'mobile' %}
+                <div class="ln_oc_contents ln_oc_contents_scroll">
+              {% else %}
+                <div class="ln_oc_contents">
+              {% endif %}
+              
+                <div class="ln_oc_contents_view">
+
+                  {% if flavour != 'mobile' %}
+                    <div id="style-1" class="ln_oc_contents_container ln_oc_contents_container_scroll"> <!--style="padding-left-right generated"-->
+                  {% else %}
+                    <div class="ln_oc_contents_container"> <!--style="padding-left-right generated"-->
+                  {% endif %}
+
+                    <!-- plan activity -->
+                    <a href="{% url 'profiles:stories' request.user.pk %}">
+                    <div class="ln_oc">
+                      <button class="ln_oc_self_btn">
+                        <span class="ln_oc_img_container ln_oc_self_img_container" style="background-image:url('{{ user.profile.avatar.url }}');"></span>
+                        <div class="ln_oc_label"><b>My Story</b></div>
+                        <div class="ln_oc_self_icon"></div>
+                      </button>
+                    </div>
+                    </a>
+
+                    <!-- open class nearby -->
+                    {% for partner in story_partner %}
+
+                    <div class="ln_oc">
+                      <a class="ln_oc_a" href="{% url 'profiles:stories' partner.pk %}">
+                        <div class="ln_oc_container">
+                          <canvas class="ln_oc_" width="194" height="194" style="transform: translate(-4.33333px, -4.33333px); position: absolute; top: 0px; left: 0px; width: 64.6667px; height: 64.6667px;"></canvas>
+                          <span class="ln_oc_img_container" style="background-image:url('{{ partner.avatar.url }}');"></span>
+                        </div>
+                        <div class="ln_oc_label">{{ partner.user.fullname|title }}</div>
+                      </a>
+                    </div>
+
+                    {% endfor %}
+                    
+
+                  </div>
+                </div>
+              </div>
+
+            </section>
+
+          </div>
+      </div>
+      
+      {% for activity in profile.activities.all %}
+      <!-- activities pre -->
+        {% if activity.status != 'POSTED' %}
+        <div class="w-col">
+          <div class="panel panel-body info-section">
+            <span class="font-bold">Your Upcoming activity
+          </div>
+        </div>
+	    <div class="w-col">
+	        <div class="panel card-body ln_act">
+	          <a href="" class="panel-top card-top-list panel-body">
+	            <div class="card-top-image" style="background: url('{{ profile.avatar.url }}')
+	            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+	            <div class="card-top-text">
+	             <p>{{ activity.name }}
+	               <br><span class="ln_act_owner">by {{ profile.user.fullname|title }}</span>
+	             </p>
+	            </div>
+	         </a>
+	         <div class="panel-body">
+	            <div class="card-class class-description-list ln_act_desc">
+                {{ activity.description }}
+              </div>
+	            <div class="card-class class-properties">
+	              <div class="w-col col-xs-6">
+	                  <i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>{{activity.date_held}}</strong> <br>
+	                  <i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>{{activity.time}} WIB</strong> <br>
+                    {% if activity.fee %}
+                    <i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR {{activity.fee}}</strong> <br>
+                    {% endif %}             
+	              </div>
+	              <div class="w-col col-xs-6">
+	                <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+	                <!-- <br>{{ class.location_name|title }}<br> -->
+	                <div class="ln_act_loc">{{activity.location_name}}</div>
+	                <a target="_blank" href="http://maps.google.com/maps?q={{ activity.location_latitude }},{{ activity.location_longitude }}">
+	                  <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+	                  <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+	                </a><br>
+	              </div>
+	            </div>
+	            <div class="card-class"><br><br><br><br><br>
+	                  <div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+	                  <div class="ln_act_members_container">
+                      {% if activity.guest.all %}
+                        {% for member in activity.guest.all|slice:":1" %}
+                        <a href="{{ member.profile.get_absolute_url }}">
+                          <div class="ln_oc ln_act_members_1">
+                              <div class="ln_oc_container">
+                                <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                </span>
+                              </div>
+                          </div>
+                        </a>
+                        {% endfor %}
+                        {% for member in activity.guest.all|slice:"1:2" %}
+                        <a href="{{ member.profile.get_absolute_url }}">
+                          <div class="ln_oc ln_act_members">
+                              <div class="ln_oc_container">
+                                <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                </span>
+                              </div>
+                          </div>
+                        </a>
+                        {% endfor %}
+                        {% if activity.guest.all|slice:"2:"%}
+                        <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container ln_act_extra_members">
+	                          <span class="">
+	                            <b>+{{activity.guest.all|slice:"2:"|length}} more</b> 
+	                          </span>
+	                        </div>
+                      </div>
+                        {% endif %}
+                      {% else %}
+                        <div class="ln_oc ln_act_members_1">
+                            <div class="ln_oc_container">
+                              <span>No guest yet.</span>
+                            </div>
+                        </div>
+                      {% endif %}
+	                  </div>
+	            </div>
+	            <div class="card-class class-button">
+	                <a href="{% url 'activity:delete' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+	                style="background-color: #d3d3d3; !important;">Remove activity</a>
+	            </div>
+	            </div>
+	        </div>
+	    </div>
+          
+        {% endif %}
+      {% endfor %}
+        
+        {% for activity in profile.user.activities_joined.all %}
+          {% if activity.status != 'POSTED' %}
+          <div class="w-col">
+              <div class="panel panel-body info-section">
+                <span class="font-bold">Activity you joined
+              </div>
+            </div>
+          <!-- activities pre -->
+          <div class="w-col">
+              <div class="panel card-body ln_act">
+                <a href="" class="panel-top card-top-list panel-body">
+                  <div class="card-top-image" style="background: url('{{ activity.partner.avatar.url }}')
+                  scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                  <div class="card-top-text">
+                  <p>{{ activity.name }}
+                    <br><span class="ln_act_owner">by {{ activity.partner.user.fullname|title }}</span>
+                  </p>
+                  </div>
+              </a>
+              <div class="panel-body">
+                  <div class="card-class class-description-list ln_act_desc">
+                    {{ activity.description }}
+                  </div>
+                  <div class="card-class class-properties">
+                    <div class="w-col col-xs-6">
+                        <i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>{{activity.date_held}}</strong> <br>
+                        <i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>{{activity.time}} WIB</strong> <br>
+                        {% if activity.fee %}
+                        <i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR {{activity.fee}}</strong> <br>
+                        {% endif %}             
+                    </div>
+                    <div class="w-col col-xs-6">
+                      <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+                      <!-- <br>{{ class.location_name|title }}<br> -->
+                      <div class="ln_act_loc">{{activity.location_name}}</div>
+                      <a target="_blank" href="http://maps.google.com/maps?q={{ activity.location_latitude }},{{ activity.location_longitude }}">
+                        <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+                        <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+                      </a><br>
+                    </div>
+                  </div>
+                  <div class="card-class"><br><br><br><br>
+                    <div style="text-align: center">
+                      <a href="{% url 'usermessages:chatbox' activity.partner %}" style="color:#000 !important; font-size:12px !important;">
+                      <i class="fa fa-envelope" style="color:#000" aria-hidden="true"></i><u> message partner</u></a>
+                      </div>
+                    <br>
+                        <div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+                        <div class="ln_act_members_container">
+                      {% if activity.guest.all %}
+                        {% for member in activity.guest.all|slice:":1" %}
+                        <a href="{{ member.profile.get_absolute_url }}">
+                          <div class="ln_oc ln_act_members_1">
+                              <div class="ln_oc_container">
+                                <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                </span>
+                              </div>
+                          </div>
+                        </a>
+                        {% endfor %}
+                        {% for member in activity.guest.all|slice:"1:2" %}
+                        <a href="{{ member.profile.get_absolute_url }}">
+                          <div class="ln_oc ln_act_members">
+                              <div class="ln_oc_container">
+                                <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                </span>
+                              </div>
+                          </div>
+                        </a>
+                        {% endfor %}
+                        {% if activity.guest.all|slice:"2:"%}
+                        <div class="ln_oc ln_act_members">
+	                        <div class="ln_oc_container ln_act_extra_members">
+	                          <span class="">
+	                            <b>+{{activity.guest.all|slice:"2:"|length}} more</b> 
+	                          </span>
+	                        </div>
+                      </div>
+                        {% endif %}
+                      {% else %}
+                        <div class="ln_oc ln_act_members_1">
+                            <div class="ln_oc_container">
+                              <span>No guest yet.</span>
+                            </div>
+                        </div>
+                      {% endif %}
+	                  </div>
+                  </div>
+                  <div class="card-class class-button">
+                      <a href="{% url 'activity:unjoin' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                      style="background-color: #d3d3d3; !important;">Unjoin activity</a>
+                  </div>
+                  </div>
+                </div>
+            </div>
+              {% endif %}
+          {% endfor %}
+        <a href="{% url 'discover' %}"> 
+            <div class="w-col">
+                <div class="panel card-body" style="height:auto">
+                  <div class="card-welcome-head"></div>   
+                    <div class="card-welcome-explore">
+                      Want to learn something new from locals?<br> 
+                      <span class="card-welcome-discover">Discover open class</span>
+                    </div>
+                  </div>       
+              </div>
+            </a>
+            
+            {% for activity in activity_posted %}
+              <div class="w-col">
+                <div class="panel card-body ln_act_thumb">
+                  <a href="{% url 'activity:detail' activity.pk %}" class="panel-top card-top-list panel-body">
+                      <div class="card-top-image" style="background: url('{{activity.partner.avatar.url}}')
+                      scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                      <div class="card-top-text"> {{activity.partner.user.fullname|title}}'s activity </div>
+                  </a>
+
+                  <div class="w-col col-xs-12 ">
+                  <div class="act-img" style="background-image: url('{{activity.photo.url}}')"></div>
+                  </div>
+                  <section class="ln_act_thum_prop">
+                {% if activity.is_liked %}
+                <input id="state-{{activity.pk}}" type="hidden" value="unlike">
+                <a id="like-{{activity.pk}}" class="ln_thum_like liked" role="button" aria-disabled="false">
+                  <span class="like_img liked">unlike</span>
+                </a>
+                {% else %}
+                <input id="state-{{activity.pk}}" type="hidden" value="like">
+                <a id="like-{{activity.pk}}" class="ln_thum_like" role="button" aria-disabled="false">
+                  <span class="like_img">like</span>
+                </a>
+                {% endif %}
+                <!--a class="ln_thum_comment" href="#" role="button">
+                  <span class="comment_img">Comment</span>
+                </a>
+                <a class="ln_thum_rate" href="#" role="button" aria-disabled="false">
+                  <span class="rate_img">4.5</span>
+                </a-->
+              </section>
+
+              <section class="ln_act_thum_count">
+                <div class="ln_count_container">
+                  <a class="ln_thum_likes" href="#">
+                    <span id="numberoflikes-{{activity.pk}}">{{activity.liked_by.all|length}}</span> likes
+                  </a>
+                  &nbsp;&nbsp;
+                  <!--a class="ln_thum_comments" href="#">
+                    <span>18</span> comments
+                  </a-->
+                </div>
+              </section>
+
+                  <div class="panel-body">
+                    <div class="card-class class-description-list ln_act_title">
+                      <strong> [ {{ activity.name }} ] </strong>
+                    </div>
+                    
+                      <div class="card-class class-description-list ln_act_desc">
+                              {{activity.caption}}
+                    </div>
+
+                    <div class="card-class tag-container">
+                      {% for tag in activity.tags.all %}
+                      #{{tag}}
+                      {% endfor %}
+                    </div>
+                    
+                      <div class="card-class class-button">
+                          <a href="{% url 'activity:detail' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                          style="background-color: #03C9A9; !important;">View activity</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          {% endfor %}
+
+
+            {# if followed_openclass #}
+            {# for class in followed_openclass #}
+            
+            <!--div class="w-col">
+                <div class="panel card-body">
+                  <a href="{{ class.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+                    <div class="card-top-image" style="background: url('{{ class.partner.avatar.url }}')
+                    scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                    <div class="card-top-text">
+                       {{ class.partner.user.fullname|title }}'s {% for category in class.categories.all %}{{ category.name|title }} {% endfor %} Open Class
+                    </div>
+                 </a>
+                 <div class="panel-body">
+                  <div class="card-class class-tag">
+                      <div class="w-col col-xs-12 tag-container">
+                            <div class="w-col col-xs-12 tag-container">
+                      <strong style="color:rgb(0,140,140);">TAGS</strong> {% for tag in class.tags.all %} {{ tag.name|title }} |{% endfor %} 
+                    </div>
+                      </div>
+                  </div>
+                  <div class="card-class class-description-list">
+                        {{ class.description|slice:":180" }}
+                  </div>
+                  <div class="card-class class-properties">
+                      <div class="w-col col-xs-6">
+                            <strong>AVAILABLE</strong> {% if class.is_active %}YES{% else %}NO{% endif %}<br>  
+                            <strong>GUEST  </strong>{{ class.maximum_guest }} Person<br>
+                            <strong>PRICE  </strong>Rp{{ class.fee }}
+                      </div>                       
+                      <div class="w-col col-xs-6">
+                        <strong>LOCATION  </strong><br>{{ class.location_name|title }}<br>
+                        <strong> 
+                                MAP </strong> <a target="_blank" href="http://maps.google.com/maps?q={{ class.location_latitude }},{{ class.location_longitude }}">
+                                <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i></a><br>
+                      </div>  
+                    </div>
+                    <div class="card-class class-button">
+                        <a href="{{ class.partner.get_absolute_url }}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                        style="background-color: #03C9A9; !important;">Visit profile</a>
+                    </div>
+                  </div>         
+                </div>
+            </div --!>         
+            
+            {# endfor #}
+          {# endif #}      
+        
+        {# if partner_openclass #}
+
+        <!-- div class="w-col">
+          <div class="panel panel-body info-section">
+            <span class="font-bold">Edit</span><br> edit your open class here 
+           </div>
+        </div>
+
+          {# for class in partner_openclass #}
+                    <div class="w-col">
+                      <div class="panel panel-body card-body">
+                        <div class="card-home-apps">
+                          <h4><b>Edit your {% for category in class.categories.all %} {{ category.name|title }} {% endfor %} open class</b></h4>
+                          <div class="card-info">
+                            Ubah tag, posisi, atau status open class <br>
+                          </div>    
+                        </div>
+                        <div class="card-button">
+                            <a href="{# url 'kelas:openclass_edit' class.pk #}" class="btn btn-success btn-block btn-profile btn-up btn-stretch-s"
+                            style="background-color: #4ECDC4; !important;">Edit open class</a>
+                        </div>        
+                      </div>
+                    </div-->
+            {# endfor #}
+            
+        {# endif #}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function(){ /* to make sure the script runs after page load */
+
+      $('.ln_act_desc').each(function(event){ /* select all divs with the item class */
+        var max_length = 150; /* set the max content length before a read more link will be added */
+
+        if($(this).html().length > max_length){ /* check for content length */
+          var short_content   = $(this).html().substr(0,max_length); /* split the content in two parts */
+          var long_content  = $(this).html().substr(max_length);
+
+          $(this).html(short_content+
+                 '<a href="#" class="ln_read_more"><br/>&nbsp;&nbsp;read more..</a>'+
+                 '<span class="more_text" style="display:none;">'+long_content+'</span>'); /* Alter the html to allow the read more functionality */
+                 
+          $(this).find('a.ln_read_more').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
+     
+            event.preventDefault(); /* prevent the a from changing the url */
+            $(this).hide(); /* hide the read more button */
+            $(this).parents('.ln_act_desc').find('.more_text').show(); /* show the .more_text span */
+          });
+        }
+        
+      });
+
+      $(document).ready(function() {
+          var walkthrough;
+          walkthrough = {
+            index: 0,
+            nextScreen: function() {
+              if (this.index < this.indexMax()) {
+                this.index++;
+                return this.updateScreen();
+              }
+            },
+            prevScreen: function() {
+              if (this.index > 0) {
+                this.index--;
+                return this.updateScreen();
+              }
+            },
+            updateScreen: function() {
+              this.reset();
+              this.goTo(this.index);
+              return this.setBtns();
+            },
+            setBtns: function() {
+              var $lastBtn, $nextBtn, $prevBtn;
+              $nextBtn = $('.next-screen');
+              $prevBtn = $('.prev-screen');
+              $lastBtn = $('.finish');
+              if (walkthrough.index === walkthrough.indexMax()) {
+                $nextBtn.prop('disabled', true);
+                $prevBtn.prop('disabled', false);
+                return $lastBtn.addClass('active').prop('disabled', false);
+              } else if (walkthrough.index === 0) {
+                $nextBtn.prop('disabled', false);
+                $prevBtn.prop('disabled', true);
+                return $lastBtn.removeClass('active').prop('disabled', true);
+              } else {
+                $nextBtn.prop('disabled', false);
+                $prevBtn.prop('disabled', false);
+                return $lastBtn.removeClass('active').prop('disabled', true);
+              }
+            },
+            goTo: function(index) {
+              $('.screen').eq(index).addClass('active');
+              return $('.dot').eq(index).addClass('active');
+            },
+            reset: function() {
+              return $('.screen, .dot').removeClass('active');
+            },
+            indexMax: function() {
+              return $('.screen').length - 1;
+            },
+            closeModal: function() {
+              $('.onboarding-container').hide('fast');
+              return setTimeout((() => {
+                $('.walkthrough, .shade').removeClass('show');
+                $('.walkthrough, .shade').removeClass('reveal');
+                this.index = 0;
+                return this.updateScreen();
+              }), 500);
+            },
+            openModal: function() {
+              $('.walkthrough, .shade').addClass('show');
+              setTimeout((() => {
+                return $('.walkthrough, .shade').addClass('reveal');
+              }), 200);
+              return this.updateScreen();
+            }
+          };
+          $('.next-screen').click(function() {
+            return walkthrough.nextScreen();
+          });
+          $('.prev-screen').click(function() {
+            return walkthrough.prevScreen();
+          });
+          $('.close').click(function() {
+            return walkthrough.closeModal();
+          });
+          walkthrough.openModal();
+          
+          // Optionally use arrow keys to navigate walkthrough
+          return $(document).keydown(function(e) {
+            switch (e.which) {
+              case 37:
+                // left
+                walkthrough.prevScreen();
+                break;
+              case 38:
+                // up
+                walkthrough.openModal();
+                break;
+              case 39:
+                // right
+                walkthrough.nextScreen();
+                break;
+              case 40:
+                // down
+                walkthrough.closeModal();
+                break;
+              default:
+                return;
+            }
+            e.preventDefault();
+          });
+        });
+     
+    });
+
+      /* activity like javascript */
+
+      const activityPk = [];
+      const state = [];
+      let i = 0;
+
+      {% for activity in activity_posted %}
+      
+      state[i] = document.getElementById('state-{{activity.pk}}').value;
+      activityPk[i] = {{activity.pk}};
+      i = i+1;
+
+      {% endfor %}
+
+      activityLike(state, activityPk);
+
+      function activityLike(state, activityPk){
+        const likeId = [];
+        const numberOfLikesPk = [];
+        for(let i = 0; i<state.length; i++){
+          likeId[i] = "#like-" + String(activityPk[i]);
+          numberOfLikesPk[i] = "numberoflikes-" + String(activityPk[i]);
+          $(likeId[i]).click(function() {
+          if (state[i] == "like") {
+              var request = $.ajax({
+                  url: "/activity/"+String(activityPk[i])+"/like",
+                  type: "get",
+              });
+              state[i] = "unlike";
+              $(likeId[i]).addClass('liked');
+              let numberoflikes = document.getElementById(numberOfLikesPk[i]).innerText;
+              document.getElementById(numberOfLikesPk[i]).innerText = parseInt(numberoflikes) + 1;
+          } else if (state[i] == "unlike") {
+              var request = $.ajax({
+                  url: "/activity/"+String(activityPk[i])+"/unlike",
+                  type: "get"
+              });
+              state[i] = "like";
+              $(likeId[i]).removeClass('liked');
+              let numberoflikes = document.getElementById(numberOfLikesPk[i]).innerText;
+              document.getElementById(numberOfLikesPk[i]).innerText = parseInt(numberoflikes) - 1;
+            }
+          });          
+        }
+      }
+
+    </script>
+{% endblock %}

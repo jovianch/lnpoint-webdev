@@ -1,0 +1,76 @@
+/*! Place your custom styles here */
+@media all and (max-width: 768px) {
+  .minh-100 {
+    min-height: 100vh;
+  }
+	.mt-mobile-1{
+		margin-top: 90px;
+	}
+}
+
+.btn-round{
+	border-radius: 100px;
+}
+
+.btn-cust-1{
+	/* Rectangle 4 Copy 2: */
+background-image: linear-gradient(-225deg, #40E1C0 0%, #3EB9D8 100%);
+box-shadow: 0 3px 7px 0 rgba(169,202,240,0.80);
+	border-color: transparent;
+}
+
+.btn-cust-2{
+	background-image: linear-gradient(-225deg, #40E1C0 0%, #3EB9D8 100%);
+	border-color: transparent;
+}
+
+.btn-cust-2:hover,.btn-cust-1:hover{
+	background-color: #40E1C0;
+}
+.formbox .foot {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+  padding: 1.22857143em;
+	background-color: #f7f7f7;
+}
+.formbox .foot:hover {
+  transform: none;
+}
+.formbox p {
+  min-height: 9.28571429em;
+}
+.formbox p:last-of-type {
+  margin-bottom: 3.71428571em;
+}
+
+.text-cta{
+	font-family: 'Raleway';
+	color: white;
+	font-weight: 700;
+	font-size: 2rem;
+}
+
+.feature h3{
+	font-weight: 700;
+	color: #39b6cb;
+}
+h2 {
+	font-weight: 600;
+}
+
+.logo-resize {
+    max-height: 4em !important;
+    margin-top: -10px !important;
+}
+
+.login-box {
+    min-height: 300px !important;
+}
+
+.about-us {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}

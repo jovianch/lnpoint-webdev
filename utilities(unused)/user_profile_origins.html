@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block title_tag %}Profile | {{profile.user.username}}{% endblock %}
+{% load static %}
+
+{% block content %}
+<!-- PROFILE -->
+<div style="display: block;height: 20px;"></div>
+  <div class="w-container">
+    <!-- BLOK PERTAMA -->
+    <div class="w-row">
+      <div class="w-col col-md-10 col-md-offset-1">
+        <div class="panel panel-body">
+          <div class="w-row">
+            <div>
+             <div class="col-xs-4">
+                    <div style="background: url('{{ profile.avatar.url }}')
+                                        scroll center / cover #ccc; height: 150px; width:150px;border-radius: 50%; margin:auto">
+                </div>
+            </div>
+            <div class="col-xs-8 profil">
+              <div> <h4>{{ profile.user.fullname|title }}</h4></div>
+              <div> <h5><span class="glyphicon glyphicon-user"></span> @{{ profile.user.username }}
+                </h5></div>
+                {% if request.user.is_active %}
+                  {% ifequal request.user profile.user %}
+                    {% if not profile.user.is_verified %}
+                        <div>
+                          <a href="{% url 'accounts:verify' profile.pk %}">Menjadi Partner</a> <br>
+                        </div>
+                    {% endif %}
+                  {% endifequal %}
+                  {% if profile.user.is_verified %}
+                    <div> <i class="fa fa-check-circle verified-icon" aria-hidden="true"></i> Verifikasi dengan <i class="fa fa-address-card" aria-hidden="true"></i> </div>
+                  {% endif %}
+                {% endif %}
+              <div> <h5> <i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ profile.institution }}
+                </h5></div>
+                {% if request.user.is_active %}
+                  {% ifequal request.user profile.user %}
+
+                    <a href="{% url 'profiles:editprofile' profile.pk %}" class="btn btn-success btn-block btn-profile btn-up">
+                         Edit Profil
+                    </a>
+                  {% endifequal %}
+                {% endif %}
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: block;height: 10px;"></div>
+    {% if profile.user.is_verified %}
+    <!-- BLOK KEDUA -->
+    <div class="w-row">
+      <div class="w-col col-md-10 col-md-offset-1 ">
+        <div class="panel panel-body">
+
+          <div class="panel-content-left">
+
+          <div class="w-row">
+            <h2> Skill </h2>
+            <div class="w-col col-md-12 skill-icon">
+              {% for skill in profile.skills.all %}
+                <span class="label label-success">{{ skill.name }}</span>
+              {% endfor %}
+              {% for skill in profile.customskill_set.all %}
+                <span class="label label-success">{{ skill.name }}</span>
+              {% endfor %}
+            </div>
+            <br>
+          </div>
+          <div class="w-row">
+            <div class="w-col col-md-12">
+              <span class="glyphicon glyphicon-tag"></span> IDR {{ profile.user.fee }}
+            </div>
+            <div class="w-col col-md-12">
+              <span class="glyphicon glyphicon-map-marker"></span> {{ profile.user.alamat_kelas }}
+            </div>
+          </div>
+          </div>
+            {% ifnotequal request.user profile.user %}
+              {% if profile.user.is_verified %}
+                <div style="display: block;height: 10px;"></div>
+                  <div class="w-row">
+                    <div class="w-col col-md-10 col-md-offset-1">
+                        <a href="{% url 'kelas:request' profile.pk %}" class="btn btn-success btn-block btn-profile btn-down" style="margin-top:20px;">Minta Kelas</a>
+                      </div>
+                    </div>
+              {% endif %}
+            {% endifnotequal %}
+            </div>
+
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div style="display: block;height: 10px;"></div>
+
+  </div>
+{% endblock %}

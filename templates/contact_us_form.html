@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title_tag %}Kontak kami | Lnpoint {{ block.super }}{% endblock %}
+
+{% block header %}
+Help
+{% endblock %}
+
+{% block content %}
+
+<div class="w-container">
+    <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div style="display:block;height:30px;"></div>
+                    <form method="POST" class="form-horizontal">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                {{ field.label }}
+                                </label>
+                                <div class="col-md-6">
+                                    <!--
+                                    <input type="text" class="form-control" name="name" value="" required autofocus>
+                                    -->
+                                    {{field}}
+                                </div>
+                                <div class="col-md-6"> {{ field.errors }}</div>
+                            </div>
+                        {% endfor %}
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <input type="submit" value="Kirim" class="hol-tran-btn w-button">
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-content-left info-panel">
+                     Atau hubungi kami :  <i class="fa fa-phone" aria-hidden="true"></i> 081331815812 / <a href="https://line.me/R/ti/p/%40unl0998g">LINE @lnpoint</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

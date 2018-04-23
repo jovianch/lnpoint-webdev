@@ -1,0 +1,224 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+<head>
+  {% load static from staticfiles %}
+  <meta charset="utf-8">
+  <title>Lnpoint | Find Nearby Class and Activity</title>
+  <meta content="lnpoint memberimu akses untuk mencari dan membuat kelas berbagimu" name="description">
+  <meta content="lnpoint" property="og:title">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Caveat+Brush|Patrick+Hand+SC|Lato" rel="stylesheet">
+  <link href="{% static 'css/main.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="icon" type="image/png" href="{% static 'image/logo bulat.png' %}" />
+  <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+  <style>
+    .hol-val-paragraph {
+    font-size: 17px;
+    font-family: 'Lato', sans-serif;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="hol-fixed-navbar w-nav" data-animation="default" data-collapse="tiny" data-duration="400" id="top">
+    <div class="w-container"><a class="w-nav-brand w--current" href="/"><img alt="lnpoint Logo" class="lnpoint-logo" src="{% static 'image/logotulisan2.png'%}" width="200"></a>
+      <nav class="nav-menu w-nav-menu" role="navigation">
+      <a class="hol-nav-link w-nav-link" href="#about" style="max-width: 940px;">TENTANG</a>
+      {% if user.is_authenticated %}
+      <a class="hol-cta-button w-button" href="{% url 'profiles:profiles' username=user.username %}">Profil</a>
+      {% else %}
+      <a class="hol-nav-link w-nav-link" href="{% url 'kelas:search' %}" style="max-width: 940px;">KELAS</a>
+      <a class="hol-nav-link w-nav-link" href="{% url 'accounts:login' %}" style="max-width: 940px;">MASUK</a>
+      <a class="hol-cta-button w-button" href="{% url 'accounts:signup' %}">DAFTAR</a>
+      {% endif%}
+      </nav>
+      <div class="green-menu-button w-nav-button">
+        <div class="hamburger-icon-white w-icon-nav-menu" style="position:fixed; color: #0b90a7; right:30px; top:30px;" ></div>
+      </div>
+    </div>
+      <div class="w-nav-overlay" data-wf-ignore=""></div>
+  </div>
+
+  <div class="hol-hero-section" data-ix="sticky-nav-appear" id="#top" style="background-position:center;">
+    <div class="w-container">
+      <div class="hol-hero-content-wrapper">
+        <h1 class="hol-hero-h1-white" style="font-size:6.5vh;margin-bottom:275px;">
+            Hi! Welcome to sharing society<br>
+        </h1>
+          {% if user.is_authenticated %}
+          <a class="hol-hero-cta-btn w-button" href="{% url 'kelas:search' %}">CARI KELAS DI BANDUNG</a><br>
+          {% else %}
+          <a class="hol-hero-cta-btn w-button" href="{% url 'accounts:signup' %}" style="padding:10px 90px;">SIGN UP</a><br>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+
+<!-- LOCATION -->
+  <div>
+    <div class="w-container">
+      <div class="div-block-centered">
+        <div class="hol-location-title-wrapper">
+          <h2 class="hol-wwd-section-title location">OUR FIRST DESTINATION</h2>
+          <p class="centered hol-val-paragraph" style="font-size:16px; color:#525c65; font-family:'Lato'; margin-bottom:10px;"> Dengan keberagaman skill, budaya, dan talenta yang ada di kampus gajah.<br><br> <b>Perjalanan dimulai</b></p>
+        </div>
+        <div class="w-row">
+          <div class="location-div-wrapper">
+            <img alt="lnpoint: Location" src="{% static 'image/bandung.png' %}" style="align:center; width:223px; height:223px;">
+            <h3 class="hol-location-title" style="color:#0b90a7">ITB Ganesha</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr width="75%">
+
+  <!-- PHILOSOPHY -->
+  <div class="hol-wwd-section">
+    <div class="w-container">
+      <div class="hol-wwd-content-wrapper">
+        <div class="info-wrapper">
+          <div class="icon-wrapper">
+            <img alt="lnpoint: place" class="icon" src="{% static 'image/places.png' %}">
+            <h3 class="icon-text">place</h3>
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: add" class="icon" src="{% static 'image/add.png' %}" style="height:80px">
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: people" class="icon" src="{% static 'image/people.png' %}">
+            <h3 class="icon-text">people</h3>
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: add" class="icon" src="{% static 'image/add.png' %}" style="height:80px">
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: education" class="icon" src="{% static 'image/education.png' %}">
+            <h3 class="icon-text">education</h3>
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: equal" class="icon" src="{% static 'image/equal.png' %}" style="height:80px">
+          </div>
+          <div class="icon-wrapper">
+            <img alt="lnpoint: education" class="icon" src="{% static 'image/result.png' %}">
+            <h3 class="icon-text">lnpoint</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="hol-about-section" id="about">
+    <div class="w-container">
+      <div class="hol-about-wrapper">
+        <h2 class="hol-wwd-section-title" style="text-align:center">LNPOINT?</h2>
+        <p class="hol-about-paragraph" style="margin-left: auto;margin-right: auto;width: 80%; font-family: 'Lato';">lnpoint merupakan sebuah social media sekaligus marketplace untuk kamu yang ingin berbagi pengalaman dan pengetahuan yang kamu punya dengan cara membuat kelasmu sendiri secara mudah, aman, dan flexible  </div>
+    </div>
+  </div>
+
+<!-- FIRST IMAGE -->
+  <div class="hol-val-wrapper">
+    <div class="bg-image hol-val-div"></div>
+    <div class="hol-val-div">
+      <div class="hol-val-content-wrapper">
+        <img alt="lnpoint: New People" class="val-number-img" src="{% static 'image/people.png' %}">
+        <h2 class="fixed-width hol-wwd-section-title">BERTEMU DENGAN TEMAN BARU</h2>
+        <p class="hol-val-paragraph">Kamu dapat belajar secara langsung dengan orang disekitarmu . Mengenal dan menambah teman baru</p>
+        <p class="hol-val-paragraph">Kamu dapat berbagi dan menolong orang di sekitarmu dengan menjadi <i>Partner</i></p>
+      </div>
+    </div>
+  </div>
+<!-- SECOND IMAGE -->
+  <div class="hol-val-wrapper rev">
+    <div class="hol-val-div">
+      <div class="hol-val-content-wrapper">
+        <img alt="lnpoint: Kelas" class="val-number-img" src="{% static 'image/places.png' %}">
+        <h2 class="fixed-width hol-wwd-section-title">KELAS YANG UNIK &amp; FLEKSIBEL</h2>
+        <p class="hol-val-paragraph">Kamu dapat mencari dan meminta kelas sesuai dengan tempat dan partner yang kamu mau.</p>
+        <p class="hol-val-paragraph">Sebagai partner kamu dapat membuat kelas sesuai keinginan kamu, mulai dari kos-an, rumah, perpustakaan, hingga kafe</p></div>
+    </div>
+    <div class="_2 bg-image hol-val-div"></div>
+  </div>
+
+<!-- THIRD IMAGE -->
+  <div class="hol-val-wrapper">
+    <div class="_3 bg-image hol-val-div"></div>
+    <div class="hol-val-div">
+      <div class="hol-val-content-wrapper">
+        <img alt="lnpoint: Kelas" class="val-number-img" src="{% static 'image/education.png' %}">
+        <h2 class="fixed-width hol-wwd-section-title">KEAHLIAN YANG BERAGAM</h2>
+        <p class="hol-val-paragraph">Kamu dapat mencari partner dengan berbagai keahlian seperti matematika, fisika, dasar pemrograman, kalkulus, arduino, dan <i>data science</i>.</p>
+        <p class="hol-val-paragraph">Sebagai partner kamu dapat meluangkan waktu untuk berbagi dan mengasah keahlian yang kamu miliki </p>
+      </div>
+    </div>
+  </div>
+
+      <!-- JOIN COMMUNITY -->
+        <div class="hol-insta-section">
+          <div class="w-container">
+            <div class="hol-location-title-wrapper">
+              <h2 class="hol-wwd-section-title location">Our Community</h2>
+              <div class="w-dyn-list">
+                <div class="dyn-list w-clearfix w-dyn-items">
+                  <div class="dyn-item w-dyn-item">
+                    <div class="w-embed"><img src="{% static 'image/photo/StockSnap_XKJDEWN1B6.jpg' %}" alt="isi sendiri" height="220" width="220"></div>
+                  </div>
+                  <div class="dyn-item w-dyn-item">
+                    <div class="w-embed"><img src="{% static 'image/photo/w8htbrcsmno-sabri-tuzcu.jpg' %}"  alt="isi sendiri" height="220" width="220"></div>
+                  </div>
+                  <div class="dyn-item w-dyn-item">
+                    <div class="w-embed"><img src="{% static 'image/photo/y_jdydxopi0-breather.jpg' %}" alt="isi sendiri" height="220" width="220"></div>
+                  </div>
+                  <div class="dyn-item w-dyn-item">
+                    <div class="w-embed"><img src="{% static 'image/photo/y0fa1dekoks-samuel-zeller.jpg' %}" alt="" height="220" width="220"></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="btn-content-wrapper"><a class="add-mar hol-tran-btn w-button" href="{% url 'kelas:search' %}" style="padding: 10px 40px;">Discover</a></div>
+        </div>
+      </div>
+
+      <!--  -->
+      <div class="hol-about-section" style="background:0">
+        <div class="w-container">
+          <div class="hol-about-wrapper">
+            <h2 class="hol-wwd-section-title" style="text-align:center; color: #0B90A7">JOIN AND SHARE</h2>
+            <p class="hol-about-paragraph" style="margin-left: auto;margin-right: auto;width: 80%; color:#525c65;font-size:20px; font-family: 'Patrick Hand SC';">As we look ahead into the next century leaders will be those who empower others - Bill Gates</p>
+            <div class="btn-content-wrapper"><a class="add-mar hol-hero-cta-btn w-button" href="#top" style="color:#FFF; ">START</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="hol-footer">
+        <div>
+            <div class="hol-val-wrapper rev">
+              <div class="w-col w-col-6">
+                <div>
+                  <div class="cote footer-title"style="color:#fff"> ©lnpoint, Inc. 2017</div>
+                </div>
+              </div>
+              <div class="w-col w-col-6">
+                <div style="cursor:pointer">
+                  <a class="cote footer-title" href="{% url 'contactus' %}"> Kontak </a>
+                  <a class="cote footer-title" href="#about"> Tentang</a>
+                  <a class="cote footer-title" href="https://line.me/R/ti/p/%40unl0998g"> LINE </a>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+</body>
+
+  <!--[if lte IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script>
+  <![endif]-->
+
+  <script src ="{% static 'js/webflow.js' %}">  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Verify Request Successful{% endblock %}
+
+{% block header %} Verify Request Successful {% endblock %}
+
+{% block content %}
+        <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default card-body">
+                <div class="panel-content-left info-panel">
+                    Permintaan verifikasi terikirim  😄<br>
+                    kami akan verifikasi data kamu maksimal 1 x 24 jam<br>
+                    untuk mempercepat verifikasi ketik "Sudah verif" di line lnpoint
+
+                    <div>
+                        <a href="https://line.me/R/ti/p/%40unl0998g" class="btn btn-success btn-block btn-profile btn-up btn-line">LINE LNPOINT</a>
+                    </div>
+
+                    <br>
+                    <i>welcome to journey of the sharing society</i>🏂<br>
+
+                    <a href="{% url 'Home' %}">
+                        <div class="back-to-home"> atau kembali ke Home</div>    
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

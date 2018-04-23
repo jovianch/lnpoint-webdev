@@ -1,0 +1,229 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#008c8c">
+
+{% load static from staticfiles %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title_tag %}Learnpoint{% endblock %}</title>
+  <meta content="lnpoint find local class in affordable prices" name="description">
+  <meta content="lnpoint" property="og:title">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Encode+Sans" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
+  <link href="{% static 'css/main.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/main2.css' %}" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" href="{% static 'image/logo bulat.png' %}" />
+  <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.css' %}">
+</head>
+<body>
+{% if flavour == 'full' %}
+<!-- NAV FULL -->
+  <div class="w-nav white-navbar" data-animation="default" data-collapse="tiny" data-duration="400" data-ix="ba-popupappear">
+    <div class="w-container"><a class="w-nav-brand" {% if user.is_authenticated %} href="{% url 'Home' %}" {% else %} href="/" {% endif %}><img class="layout-color-icon" src="{% static 'image/bnw.png' %}"></a>
+      <div class="w-nav-button">
+        <div class="w-icon-nav-menu nav-fit">
+        </div>
+      </div>
+      <nav class="w-nav-menu" role="navigation">
+        {% if user.is_authenticated %}
+          <!-- Modal Post -->
+          <a class="hol-nav-link w-nav-link nav-mobile-icon-create-dsk icon-fit" id="createBtn"></a>
+          <!-- Cari Kelas -->
+          <a class="hol-nav-link w-nav-link nav-mobile-icon-search icon-fit" href="{% url 'discover' %}"></a>
+          <!-- Chat Box -->
+          <a class="hol-nav-link w-nav-link nav-mobile-icon-message icon-fit" href="{% url 'usermessages:inbox' %}"></a>
+          <!-- Profile -->
+          <a class="hol-nav-link w-nav-link nav-mobile-icon-profile icon-fit" href="{% url 'profiles:profiles' user.profile.pk %}"></a>
+           <!-- Logout -->
+          <a class="hol-nav-link w-nav-link nav-mobile-icon-logout icon-fit" href="{% url 'accounts:signout' %}"></a>
+        {% else %}
+          <!-- Cari Kelas -->
+
+          <a class="hol-nav-link w-nav-link whitenav" href="{% url 'discover' %}">Find Class</a>
+          <!-- Login Button -->
+          <a class="hol-nav-link w-nav-link whitenav" href="{% url 'accounts:login' %}">Login</a>
+          <!-- Sign Up -->
+          <a class="hol-cta-button w-button whitenav w--current" href="{% url 'accounts:signup' %}">Sign up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+{% else %}
+<div class="nav-mobile-top">
+    <header class="nav-mobile-header">
+        {% if user.is_authenticated %}
+        <div class="nav-mobile-header-text">{% block header %}Lnpoint{% endblock %}</div>
+        {% else %}
+        <a class="nav-mobile-header-text" href="/">Lnpoint</a>
+        {% endif %}
+    </header>
+</div>
+{% endif %}
+
+
+<!-- BODY -->
+  {% if flavour == 'full' %}
+  <div class="main-body body-height" style="height: 82%;">
+  {% endif %}
+
+  {% if flavour == 'mobile' %}
+  <div class="main-body body-height" style="height: 89%;">
+  {% endif %}
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close close-modal">&times;</span>
+        <span class="modal-content-title"><p>What do you want to do?</p></span>
+        <div class="create_btn_container">
+          <a href="{% url 'kelas:openclass_post' %}" data-animation="ripple"><i class="fa fa-lightbulb-o" style="color: #fff" aria-hidden="true"></i>&nbsp;&nbsp;Share open Class</a>
+        </div>
+        <br>
+        <div class="create_btn_container">
+          <a href="{% url 'activity:plan' %}" data-animation="ripple"><i class="fa fa-users" style="color: #fff" aria-hidden="true"></i>&nbsp;&nbsp;Plan activity</a>
+        </div>
+      </div>
+    </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div href="#" class="alert alert-{{ message.tags }} alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{ message.tags|title }}!</strong> {{ message }}</div>
+      {% endfor %}
+      
+    <div class="block-10px"></div>
+    {% endif %}
+    
+    {% block content %}
+    {% endblock %}
+  </div>
+<!-- FOOTER -->
+
+{% if flavour == 'full' %}
+      <!-- FOOTER FULL -->
+   <div class="hol-footer-container">   
+    <div class="w-container">
+      <div class="hol-footer">
+        <div>
+          <div class="hol-val-wrapper rev">
+            <div class="w-col w-col-6">
+              <div>
+                <div class="cote footer-title"> ©Learnpoint, Inc. 2017</div>
+              </div>
+            </div>
+            <div class="w-col w-col-6">
+              <div>
+                {% if user.is_authenticated %}
+                <a class="cote footer-title" href="{% url 'contactus' %}">Contact Us</a>
+                {% else %}
+                <a class="cote footer-title" href="{% url 'accounts:signup' %}"> Sign Up</a>
+                {% endif %}
+                <a class="cote footer-title" href="https://www.lnpoint.com/about"> About</a>
+                <a class="cote footer-title" href="https://line.me/R/ti/p/%40unl0998g"> LINE </a>
+                <a class="cote footer-title" href="https://www.instagram.com/lnpoint"> IG </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>   
+{% endif %}
+
+{% if flavour == 'mobile' %}
+    <div class="block-40px"></div>
+
+      <div class="nav-mobile-layout">
+        <div class="nav-mobile-line"></div>
+        <div class="containers-wrap">
+              {% if user.is_authenticated %}
+          <div class="a-containers">
+              <div class="nav-mobile-icon-bg">
+                <a href="{% url 'Home' %}" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-home"></div>
+                </a>
+              </div>
+              <div class="nav-mobile-icon-bg">
+                <a href="{% url 'discover' %}" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-search"></div>
+                </a>
+              </div>
+              <div class="nav-mobile-icon-bg">
+                <a id="createBtn" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-create"></div>
+                </a>
+              </div>
+              <div class="nav-mobile-icon-bg">
+                <a href="{% url 'usermessages:inbox' %}" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-message"></div>
+                </a>
+              </div>
+              <div class="nav-mobile-icon-bg">
+                <a href="{% url 'profiles:profiles' user.profile.pk %}" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-profile"></div>
+                </a>
+              </div>
+              <!--
+              <div class="nav-mobile-icon-bg">
+                <a href="{% url 'accounts:signout' %}" class="nav-mobile-icon-bg-in">
+                  <div class="nav-mobile-icon-logout"></div>
+                </a>
+              </div>
+              -->
+          </div>
+              {% else %}
+            <div class="a-containers mobile-footer-containers">
+              <a class="mobile-footer-text"
+                 href="{% url 'accounts:signup' %}">Join the sharing community movement! Sign Up </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+{% else %}
+
+
+{% endif %}
+
+    <script type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script-->
+    <script src ="{% static 'js/webflow.js' %}">  </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script>
+
+    <!-- for create button -->
+    <script type="text/javascript">
+    var modal = document.getElementById('myModal');
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    $("#createBtn").click(function() {
+        $("#myModal").css("display", "block");
+        console.log('1');
+    });
+
+    // When the user clicks on <span> (x), close the modal
+     $(".close-modal").click(function() {
+        $("#myModal").css("display", "none");
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+
+    {% block js %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+{% block title_tag %}Search{% endblock %}
+{% block content %}
+    {% for profile in all_profiles %}
+        {% if profile.user.is_verified %}
+            <a href="{% url 'profiles:profiles' profile.pk %}">
+            <div style="display: block;height: 20px;"></div>
+            <div class="w-container">
+              <div class="w-row">
+                <div class="w-col col-lg-10 col-md-offset-1">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: block;height: 20px;"></div>
+            <div class="w-container">
+              <div class="w-row">
+                <div class="w-col col-md-10 col-md-offset-1">
+                  <div class="panel panel-body">
+                    <div class="w-row">
+                      <div class="w-col col-md-3">
+                        <div class="profile-header-container">
+                          <div class="profile-header-img">
+                            <img class="img-circle tengah" src="/media/{{profile.avatar}}" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class=" w-col col-md-9 profil">
+                        <div> <h4>{{profile.user.fullname}}</h4></div>
+                        <div> <h5> <span class="glyphicon glyphicon-user"></span> {{profile.user}} </h5></div>
+                        <div> <span class="glyphicon glyphicon-tag"></span> IDR {{profile.user.fee}}
+                            <br>
+                              <span class="glyphicon glyphicon-map-marker"></span> {{profile.user.alamat_kelas}}
+                        </div><br>
+                       <div class="w-col col-md-12">
+                           {% for skill in profile.skills.all %}
+                                <span class="label label-success kuning">{{skill.name}}</span>
+                           {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}{% load i18n %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Request Kelas | {{ profile.user.username }}{% endblock %}
+
+{% block header %} Request Kelas {{ profile.user.username }} {% endblock %}
+
+{% block content %}
+<div class="w-container">
+    <div class="w-row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default" style="padding:20px;">
+          <div class="w-row">
+             <div class="col-xs-12 col-sm-4">
+                 <div style="background: url('{{ profile.avatar.url }}')
+                                        scroll center / cover #ccc; height: 150px; width:150px;border-radius: 50%; margin:auto">
+                </div>
+              </div>
+            <div class="col-xs-12 col-sm-8 profil">
+              <div> <h4>Kelas {{ profile.user.fullname|title }}</h4></div>
+                <h5><span class="glyphicon glyphicon-user"></span> {{ profile.user.username }}</h5>
+                <h5><span class="glyphicon glyphicon-map-marker"></span> {{ profile.user.alamat_kelas }}</h5>
+                <h5><span class="glyphicon glyphicon-tag"></span> IDR {{ profile.user.fee }}</h5>
+                <h5><i class="fa fa-users" aria-hidden="true"></i> Jumlah guest maximum : {{ profile.user.maximum_guest }} </h5>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="w-container">
+    <div class="w-row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div style="display:block;height:30px;"></div>
+                    <form method="POST" class="form-horizontal">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                {{field.label}}
+                                </label>
+                                <div class="col-md-6">
+                                    <!--
+                                    <input id="name" type="text" class="form-control" name="name" value="" required autofocus>
+                                    -->
+                                    {{field}}
+                                </div>
+                            </div>
+                        {% endfor %}
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <input type="submit" value="AJUKAN KELAS" class="hol-tran-btn w-button">
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

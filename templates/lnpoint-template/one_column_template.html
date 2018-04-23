@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Edit | {{ profile.user.username }}{% endblock %}
+
+{% block header %}Open Class{% endblock %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<!-- Card Core design -->    
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel panel-body card-form-body">
+                <!-- end Card core design -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+
+
+
+
+
+

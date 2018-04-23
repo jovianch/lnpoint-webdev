@@ -1,0 +1,391 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+{% block title_tag %}Discover{% endblock %}
+
+{% block header %}
+
+<form method="GET" action="" class="form-search-result">
+<input type="text" placeholder="Search" name="q" class="form-control form-search-refactor form-class-mobile"/>
+</form>
+
+{% endblock %}
+
+{% block content %}
+<body class="app">
+
+  <div class="w-row">
+    <div class="col-md-6 peta discover">
+        <div id="map-canvas"></div>
+    </div>
+    {% if flavour == 'mobile' %}
+    <div class="centerer">
+
+      <div class="switcher">
+        <input type="radio" name="balance" value="yin" id="ln_maps_inp" class="switcher__input switcher__input--yin" checked="">
+        <label for="map" id="ln_maps_btn" class="switcher__label"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</label>
+        
+        <input type="radio" name="balance" value="yang" id="ln_list_inp" class="switcher__input switcher__input--yang">
+        <label for="list" id="ln_list_btn" class="switcher__label"> <i class="fa fa-th-large" aria-hidden="true"></i> List</label>
+        
+        <span class="switcher__toggle"></span>
+      </div>
+
+    </div>
+    {% endif %}
+    <div class="col-md-6 cari">
+        {% if flavour == 'full' %}
+          <form method="GET" action="" class="form-search-result">
+              <input type="text" placeholder="What openclass or which user are you searching for?" name="q" class="form-control form-search form-search-refactor"/>
+              <input type="submit" value="Find" class="btn btn-success btn-block btn-profile btn-up btn-find-search" style="background: #F62459 !important;">
+          </form>
+        {% endif %}
+    <div class="block-20px"></div>
+    <div class="w-container pre-scrollable-custom scroll scroll-card-list">
+      <div class="w-row">
+
+          {% for result in SearchResult %}
+            {% if result.username != None %} {% with user=result %}
+            
+                <div class="w-col">
+                    <a href="{{ user.profile.get_absolute_url }}">
+                    <div class="panel card-body-user">
+                      <div class="panel-top card-top-list-user panel-body">
+                        <div class="card-top-image-user" style="background: url('{{ user.profile.avatar.url }}')
+                        scroll center / cover #ccc;"></div>
+                       </div>
+                     <div class="panel-body">
+                        <div class="card-content-user">
+                            @{{ user.username }} 
+                            {% if user.is_verified %}
+                            <i class="fa fa-check-circle verified-icon" aria-hidden="true"></i>
+                            {% endif %}<br>
+                            <span class="card-content-fullname">{{user.fullname|title}}</span>
+                            <br>
+                            <span class="card-content-institution">{{user.instititution}}</span>
+                        </div>
+                        <div class="col-xs-6 card-content-follows">
+                            Following {{user.follows.count}}
+                        </div>
+                        <div class="col-xs-6 card-content-follows">
+                            Followers {{user.followers.count}}
+                        </div>
+                      </div>
+                    </div>
+                    </a> 
+                </div> 
+            {% endwith %} {% elif result.duration != None %} {% with activity=result %}
+                <div class="w-col">
+						<div class="panel card-body ln_act">
+							<a href="{{ activity.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+								<div class="card-top-image" style="background: url('{{ activity.partner.avatar.url }}')
+								scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+								<div class="card-top-text">
+								<p>{{ activity.name }}
+									<br><span class="ln_act_owner">by {{ activity.partner.user.fullname|title }}</span>
+								</p>
+								</div>
+						</a>
+						<div class="panel-body">
+								<div class="card-class class-description-list ln_act_desc">
+									{{ activity.description }}
+								</div>
+								<div class="card-class class-properties">
+									<div class="w-col col-xs-6">
+											<i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>{{activity.date_held}}</strong> <br>
+											<i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>{{activity.time}} WIB</strong> <br>
+											{% if activity.fee %}
+											<i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR {{activity.fee}}</strong> <br>
+											{% endif %}             
+									</div>
+									<div class="w-col col-xs-6">
+										<i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+										<!-- <br>{{ openclass.location_name|title }}<br> -->
+										<div class="ln_act_loc">{{activity.location_name}}</div>
+										<a target="_blank" href="http://maps.google.com/maps?q={{ activity.location_latitude }},{{ activity.location_longitude }}">
+											<i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+											<span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+										</a><br>
+									</div>
+									<br>
+								</div>
+								
+								<div class="card-class"><br><br><br><br>
+										<div style="text-align: center">
+                                            {% if activity.partner != request.user.profile %}
+											<a href="{% url 'usermessages:chatbox' activity.partner %}" style="color:#000 !important; font-size:12px !important;">
+											<i class="fa fa-envelope" style="color:#000" aria-hidden="true"></i><u> message partner</u></a>
+										{% endif %}
+										</div>
+									<br>
+											<div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+											<div class="ln_act_members_container">
+												{% if activity.guest.all %}
+                                                    {% for member in activity.guest.all|slice:":1" %}
+                                                    <a href="{{ member.profile.get_absolute_url }}">
+                                                        <div class="ln_oc ln_act_members_1">
+                                                                <div class="ln_oc_container">
+                                                                    <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+                                                    </a>    
+													{% endfor %}
+                                                    {% for member in activity.guest.all|slice:"1:6" %}
+                                                    <a href="{{ member.profile.get_absolute_url }}">
+                                                        <div class="ln_oc ln_act_members">
+                                                                <div class="ln_oc_container">
+                                                                    <span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+                                                    </a>
+													{% endfor %}
+												{% else %}
+													<div class="ln_oc ln_act_members_1">
+															<div class="ln_oc_container">
+																<span>No guest yet.</span>
+															</div>
+													</div>
+												{% endif %}
+
+												<!-- div class="ln_oc ln_act_members">
+														<div class="ln_oc_container ln_act_extra_members">
+															<span class="">
+																<b>+7 more</b> 
+															</span>
+														</div>
+												</div -->
+											</div>
+								</div>
+								{% if activity.partner != request.user.profile %}
+									{% if request.user in activity.guest.all %}
+									<div class="card-class class-button">
+										<a href="{% url 'activity:unjoin' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #d3d3d3; !important;">Unjoin Activity</a>
+									</div>
+									{% else %}
+								<div class="card-class class-button">
+										<a href="{% url 'activity:join' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #03C9A9; !important;">Join Activity</a>
+								</div>
+									{% endif %}
+								{% else %}
+								<div class="card-class class-button">
+										<a href="{% url 'activity:delete' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #03C9A9; !important;">Remove Activity</a>
+								</div>
+								{% endif %}
+								</div>
+						</div>
+				</div>
+
+            {% endwith %} {% else %} {% with openclass=result %}
+            <div class="w-col">
+                    <div class="panel card-body">
+                    <a href="{{ openclass.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+                        <div class="card-top-image" style="background: url('{{ openclass.partner.avatar.url }}')
+                        scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                        <div class="card-top-text">
+                        {{ openclass.partner.user.fullname|title }}'s {% for category in openclass.categories.all %}{{ category.name|title }} {% endfor %} Open Class
+                        </div>
+                    </a>
+                    <div class="panel-body">
+                    <!--div class="card-class class-tag">
+                        <div class="w-col col-xs-12 tag-container">
+                                <div class="w-col col-xs-12 tag-container">
+                        <strong style="color:rgb(0,140,140);">TAGS</strong> {% for tag in openclass.tags.all %} {{ tag.name|title }} |{% endfor %} 
+                        </div>
+                        </div>
+                    </div-->
+                    <div class="card-class class-description-list">
+                            {{ openclass.description|slice:":180" }}
+                    </div>
+                    <div class="card-class class-properties">
+                            <div class="w-col col-xs-12">
+                                <strong>
+                                                {% if openclass.fee %}
+                                                IDR {{openclass.fee}}
+                                                {% endif %}
+                                </strong>
+                                <br>  
+                            </div>                      
+                            <div class="w-col col-xs-12">
+                                <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+                                            <!-- <br>{{ openclass.location_name|title }}<br> -->
+                                            {{openclass.location_name}}<br>
+                                            <a target="_blank" href="http://maps.google.com/maps?q={{ openclass.location_latitude }},{{ openclass.location_longitude }}">
+                                                <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+                                                <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+                                            </a><br>
+                            </div>	  
+                            <div class="w-col col-xs-12">
+                                <strong>
+                                    {% if openclass.is_active %}
+                                    This open class is available <i class="fa fa-circle fa-available" aria-hidden="true"></i>
+                                    {% else %}
+                                    This open class is not available <i class="fa fa-circle fa-not-available" aria-hidden="true"></i>
+                                    {% endif %}
+                                    </strong><br>  
+
+                        </div>    
+                        </div>
+                        <div class="card-class class-button">
+                        {% if openclass.partner != request.user.profile %}
+                            <a href="{% url 'usermessages:chatbox' openclass.partner %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                            style="background-color: #03C9A9; !important;">Ask for activity</a>
+                        {% else %}
+                            <a href="{% url 'kelas:edit' openclass.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                            style="background-color: #03C9A9; !important;">Edit open class</a>
+                        {% endif %}
+                        </div>
+                    </div>         
+                    </div>
+                </div>
+            {% endwith %} {% endif %}
+          {% endfor %}
+          {% if is_paginated %}
+          <div class="pagination">
+              <span class="page-links">
+                  {% if page_obj.has_previous %}
+                      <a href="/discover?page={{ page_obj.previous_page_number }}">previous</a>
+                  {% endif %}
+                  <span class="page-current">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                  </span>
+                  {% if page_obj.has_next %}
+                      <a href="/discover?page={{ page_obj.next_page_number }}">next</a>
+                  {% endif %}
+              </span>
+          </div>
+      {% endif %}
+        </div>
+        {% if flavour == 'mobile' %}
+        <div class="block-20px"></div>
+        <div class="block-20px"></div>
+        <div class="block-20px"></div>
+        {% endif %}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkFy77ZHS21_yRJIa9_8a5aQdEyLCorZI&callback"></script>
+  <script>
+        function initialize() {
+            var mapOptions = {
+                zoom: 16,
+                center: new google.maps.LatLng(-6.88927632, 107.61037588),
+                clickableIcons: false,
+                styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"poi.attraction","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}],
+            };
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var image = "{% static 'image/map_marker1.png' %}";
+
+            var contentString = [];
+            var infoWindow = [];
+            var marker = [];
+            var Latlng = [];
+
+            var i = 0;
+            var prevInfoWindow = false;
+
+            {% for result in SearchResult %}
+                {% with class=result %}
+                    Latlng[i] = new google.maps.LatLng( '{{ class.location_latitude }}','{{ class.location_longitude }}' );
+
+                    contentString[i] =
+                    '<div class="map-content">'+
+                    '<div class="map-heading pull-left">'+
+                        '<div> <a href="{{ class.partner.get_absolute_url }}">{{ class.partner.user.fullname|title }} {% for category in class.categories.all %}{{ category.name|title }} {% endfor %} Open Class </h4></a></div>'+
+                        '<div class="w-col col-md-12 skill-icon">'+
+                        '</div>'+
+                        '<p class="map-class-info"><span class="glyphicon glyphicon-map-marker"></span>{{ class.location_name }}</p>'+
+                    '</div>'+
+                    '<div class="clearfix"></div>'+
+                    '</div>';
+
+                    marker[i] = new google.maps.Marker({
+                        position: Latlng[i],
+                        map: map,
+                        title: '{{ profile.user }}',
+                        icon: image
+                    });
+
+
+                    infoWindow[i] = new google.maps.InfoWindow({
+                    content: contentString[i]
+                    });
+
+                    google.maps.event.addListener(marker[i], 'click', (function(i) {
+                    return function() {
+                    if (prevInfoWindow){
+                        prevInfoWindow.close();
+                    }
+                    prevInfoWindow = infoWindow[i];
+                    infoWindow[i].open(map,marker[i]);
+                    }
+                    })(i));
+
+                    i = i + 1;
+                {% endwith %}
+            {% endfor %}
+
+
+            }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    </script>
+
+    <script type="text/javascript">
+    $(function(){ /* to make sure the script runs after page load */
+
+      $('.ln_act_desc').each(function(event){ /* select all divs with the item class */
+        var max_length = 150; /* set the max content length before a read more link will be added */
+
+        if($(this).html().length > max_length){ /* check for content length */
+          var short_content   = $(this).html().substr(0,max_length); /* split the content in two parts */
+          var long_content  = $(this).html().substr(max_length);
+
+          $(this).html(short_content+
+                 '<a href="#" class="ln_read_more"><br/>&nbsp;&nbsp;read more..</a>'+
+                 '<span class="more_text" style="display:none;">'+long_content+'</span>'); /* Alter the html to allow the read more functionality */
+                 
+          $(this).find('a.ln_read_more').click(function(event){ /* find the a.read_more element within the new html and bind the following code to it */
+     
+            event.preventDefault(); /* prevent the a from changing the url */
+            $(this).hide(); /* hide the read more button */
+            $(this).parents('.ln_act_desc').find('.more_text').show(); /* show the .more_text span */
+          });
+        }
+        
+      });
+
+      $("#ln_maps_btn").click(function(e) {
+          $("#ln_maps_inp").prop("checked", true);
+          $("#ln_list_inp").prop("checked", false);
+          $(".peta").show();
+          $(".cari").hide();
+      });
+      $("#ln_list_btn").click(function(e) {
+          $("#ln_maps_inp").prop("checked", false);
+          $("#ln_list_inp").prop("checked", true);
+          $(".peta").hide();
+          $(".cari").show();
+      });
+     
+    });
+    </script>
+
+
+{% endblock %}

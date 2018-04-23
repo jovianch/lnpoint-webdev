@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Edit | {{ profile.user.username }}{% endblock %}
+
+{% block header %}Edit open class{% endblock %}
+
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<!-- Card Core design -->    
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel panel-body card-form-body">
+                <!-- end Card core design -->
+                <div class="card-form-title">
+                   Edit open class anytime, we keep it simple and flexible<br>
+                </div>
+                <div class="card-form-subtitle">   
+                     Change place, tags, price, whenever you like.<br>
+                </div>
+                <form method="POST" enctype=multipart/form-data action="">
+                    {% csrf_token %}
+                        {{ tag_formset.management_form }}
+                        {{ openclass_form.location_latitude }}
+                        {{ openclass_form.location_longitude }}
+                        {{ openclass_form.location_name }}
+                <div class="card-form-body">
+                    <div class="card-form-label">
+                        Want to take a break?
+                    </div>
+                    <div class="card-form-label-info">
+                        Jadwal padat? Ingin istirahat sejenak? aktifkan atau nonaktifkan openclass sesuai keinginanmu.
+                    </div>
+                        {{ openclass_form.is_active }}
+                        <br>
+                    <input type="submit" value="Change" class="card-btn-submit">
+                                        <hr>
+                    <a href="{% url 'class:delete' openclass_data.pk %}" class="ln_cmt_more"><i class="fa fa-window-close" aria-hidden="true"></i> Remove this post</a>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}
+
+

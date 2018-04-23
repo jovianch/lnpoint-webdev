@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %} Chat | {{ profile.user.username }}{% endblock %}
+
+{% block header %}Chat{% endblock %}
+
+{% block content %}
+
+<!-- Card Core design -->    
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel card-form-body card-chat">
+                <!-- end Card core design -->
+                <div class="card-chat-header">
+                    Chat {{ message_receiver.fullname|title }}<br><br>
+                    <span class="card-chat-header-info">Jika partner sudah terverifikasi, kamu akan memberi notifikasi SMS melalui chat pertama</span>
+                </div>
+                <div class="card-chat-body">
+                {% for usermessage in message_list %}
+                    {% ifequal usermessage.sender message_sender %}
+                    <div class="card-chat-container-left">
+                            <a href="{{ message_sender.profile.get_absolute_url }}">
+                            <div class="card-top-image-right" style="background: url('{{ message_sender.profile.avatar.url }}')
+                                scroll center / cover #ccc;"></div>
+                            </a>
+                            <div class="card-inbox-text">
+                                    <div class="card-chat-sender-name">
+                                      {{ message_sender.fullname|title }} 
+                                    </div>
+                                <div class="card-chat-sender-msg">
+                                    {{ usermessage.message }}
+                                </div>
+                                <div class="card-chat-date">
+                                    {{ usermessage.date_sent }}
+                                </div>
+                            </div>
+                        </div>
+                    
+                    {% else %}
+                    <div class="card-chat-container-right">
+                            <a href="{{ message_receiver.profile.get_absolute_url }}">
+                            <div class="card-top-image" style="background: url('{{ message_receiver.profile.avatar.url }}')
+                            scroll center / cover #ccc;"></div>
+                            </a>
+                            <div class="card-inbox-text">
+                                <div class="card-chat-receiver-name">
+                                    {{ message_receiver.fullname|title }}
+                                </div>
+                                <div class="card-chat-receiver-msg">
+                                    {{ usermessage.message }}
+                                </div>
+                                <div class="card-chat-date">
+                                    {{ usermessage.date_sent }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endifequal %}      
+                {% endfor %}
+                </div>
+                <form method="POST" enctype=multipart/form-data action="" autocomplete="off">
+                    {% csrf_token %}
+                <div class="card-chat-sending">
+                    <div class="card-chat-sending-textbox">
+                        {{ form.message }}
+                    </div>
+                    <input type="submit" value="Send" class="card-chat-btn-send">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}
+

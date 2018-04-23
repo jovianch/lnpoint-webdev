@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+{% block title_tag %}Verify | {{ profile.user.username }}{% endblock %}
+
+{% block header %} Account Verification {% endblock %}
+
+{% block content %}
+
+
+<div class="w-container">
+        <div class="col-md-offset-1">
+            <div class="w-col col-sm-10">
+                <div class="panel panel-body card-form-body">
+                        <div class="card-form-title form-partner">
+                                <span class="form-partner-title">partner<br></span>
+                                
+                                <span class="form-partner-noun">noun | part·ner | \ˈpärt-nər also ˈpärd-\<br></span>
+                                
+                                <span class="form-partner-archaic">archaic : one that shares : partaker<br></span>
+                        </div>
+                        <div class="card-form-subtitle">   
+                                For share class or activity and start to share, you have to be verified.
+                                <br>
+                        </div>
+                        <form method="POST" class="form-horizontal">
+                            {% csrf_token %}
+                            <div class="card-form-body">
+                                <div class="card-form-label">
+                                    What is your institution?
+                                </div>
+                                <div class="card-form-label-info">
+                                        Masukkan salah satu institusi asalmu, seperti Informatika ITB, Unit Olahraga Unpad, Bandung JS, atau lainnya
+                               </div>
+                                <div class="card-form-input">
+                                    {{ form.institution }}
+                                    {{ form.institution.errors }}
+                                </div>
+                                <hr>
+                                <div class="card-form-label">
+                                    Input Your Card ID
+                                </div>
+                                <div class="card-form-label-info">
+                                        Masukkan kode ID dari institusi kamu seperti Nomor Induk Mahasiswa. <br><i>jika tidak ada beri angka 0, kami akan menghubungi anda melalui no hp yang anda isi di bawah</i>
+                               </div>
+                                <div class="card-form-input">
+                                    {{ form.card_id }}
+                                    {{ form.card_id.errors }}
+                                </div>
+                                <hr>
+                                <div class="card-form-label">
+                                    Input Your Phone Number
+                                </div>
+                                <div class="card-form-label-info">
+                                        Masukkan no Handphone mu yang aktif.<br> <b>Kami akan memberi notifikasi kepada no HP ini jika ada user yang tertarik ke open class mu</b>
+                                </div>
+                                <div class="card-form-input">
+                                    {{ form.phone_number }}
+                                    {{ form.phone_number.errors }}
+                                </div>
+
+                                <div class="card-form-label">
+                                    Contact ID
+                                </div>
+                                <div class="card-form-label-info">
+                                        Masukkan kontak social media mu yang lain seperti LINE
+                                </div>
+                                <div class="card-form-input">
+                                    {{ form.contact }}
+                                    {{ form.contact.errors }}
+                                </div>
+                                
+                                <input type="submit" value="Verify" class="card-btn-submit btn-verif">
+                            </div>
+                        </form>
+                </div>
+            </div>    
+        </div>
+</div>        
+<div class="block-20px"></div>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "layout_landingpage.html" %}{% load i18n %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<div class="main-container">
+    <a id="cover-form-4" class="in-page-link"></a>
+    <section class="height-90 minh-100 color-bg" id="home">
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-md-5 col-sm-6 mt--3 color--white mb--2">
+                    <h2 class="color--white"><b>Hi folks,</b> welcome to sharing society</h2>
+                    <p class="f-16">Dengan cara yang simple, tempat dan harga yang fleksibel, sekarang kamu dapat berbagi pengetahuan dan pengalaman dengan membuat kelasmu sendiri. </p>
+                    <div class="btn-cont">
+                            <a class="btn btn--primary-1 type--uppercase" href="{% url 'about' %}"> <span class="btn__text">
+                                About
+                            </span> </a>
+                            <!-- a class="btn btn--primary-1 type--uppercase" href="#"> <span class="btn__text">
+                                Sign in
+                            </span> </a-->
+                        </div>
+                </div>
+                <div class="col-md-5 col-md-offset-1 col-sm-6  mt--3">
+                    <div class=" boxed formbox boxed--lg bg--white boxed--border boxed-form">
+                        <h3 class="text-center">Sign In</h3>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                {% for field in form %}
+                                <div class="col-xs-12">{{ field }} </div>
+                                {% endfor %}
+                                {% if form.errors %}
+                                <div class="col-xs-12"> {{ form.username.errors }} {{ form.non_field_errors }}</div>
+                                {% endif %}
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn--primary type--uppercase">Sign In</button>
+                                </div>
+                                <div class="col-xs-12 mb--2"> <!-- span class="type--fine-print"><a href="#">Forget Password?</a></span --> </div>
+                            </div>
+                        </form>
+                        <div class="foot text-center"> <span class="type--fine-print">Didn't have an account?<a href="{% url 'accounts:signup' %}"> Sign up here</a></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-down">> Scroll to learn more </div>
+        </div>
+    </section>
+    <section class="bg--secondary unpad--top switchable switchable--switch"> <img src="{% static 'image/index/page-divider.png' %}" alt="" class="page-divider">
+        <div class="container mt--2">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 text-center"> <img alt="Image" src="{% static 'image/index/mockup-openclass.png' %}"> </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="feature-container">
+                        <h1> Book affordable class from local communities</h1>
+                        <p class="f-18">  Dari beragam komunitas dan partner di sekitar kamu, kamu dapat mencari kelas dan belajar di open class dengan harga yang terjangkau. 
+                            Cari, chat dan langsung agendakan open class dengan partner yang kamu mau.
+                        </p>
+                        <a class="btn btn--primary type--uppercase" href="{% url 'discover' %}"> <span class="btn__text">
+                                Discover
+                            </span> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg--secondary switchable">
+        <div class="container mt--3">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 text-center"> <img alt="Image" src="{% static 'image/index/mockup-post.png' %}"> </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="feature-container">
+                        <h1> Open your own class about anything you want to share</h1>
+                        <p class="f-18">Buat open class mu mengenai apa saja, dimana saja yang kamu mau, gratis tanpa komisi. Dapatkan uang tambahan dengan berbagi secara 
+                                simple dan flexible.</p>
+                        <a class="btn btn--primary type--uppercase" href="https://www.instagram.com/lnpoint"> <span class="btn__text">
+                               our instagram
+                            </span> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- section class="bg--secondary switchable">
+        <div class="container mt--3">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 text-center"> <img alt="Image" src="img/mockup-1.png"> </div>
+                <div class="col-md-6 col-sm-6 mt-mobile-1">
+                    <div class="feature-container">
+                        <h1> Streamline your workflow with Stack </h1>
+                        <p class="f-18"> Build lean, beautiful websites with a clean and contemporary look to suit a range of purposes. </p>
+                        <a class="btn btn--primary type--uppercase" href="#"> <span class="btn__text">
+                                Learn More
+                            </span> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section -->
+    <img src="{% static 'image/index/page-divider.png' %}" alt="" class="page-divider-rotate">
+    <section class="color-bg-1 height-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 signup-container">
+                    <div class="mt--3 color--white">
+                        <h1 class="color--white"> Sign up now!</h1>
+                        <p class="f-18"><i>It's simple, flexible,and free! no commision</i>. Tunggu apa lagi, ayo jadi bagian dari lnpoint sharing society sekarang </p>
+                        <a class="btn btn--primary-1 type--uppercase" href="{% url 'accounts:signup' %}"> <span class="btn__text">
+                                Sign up
+                            </span> </a>
+                    </div>
+                </div>
+                <img src="{% static 'image/index/lnbg.png' %}" class="img-signup" alt="">
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+{% block footer %}
+
+<footer class="footer-7 text-center-xs bg--primary-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6"> <span class="">© <span class="update-year">2017</span> lnpoint — One stop sharing platform</span>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+                <ul class="social-list list-inline">
+                    <li><a href="https://line.me/R/ti/p/%40unl0998g"><i class="socicon socicon-line icon icon--xs"></i></a></li>
+                    <!--li><a href="#"><i class="socicon socicon-google icon icon--xs"></i></a></li>
+                    <li><a href="#"><i class="socicon socicon-twitter icon icon--xs"></i></a></li>
+                    <li><a href="#"><i class="socicon socicon-facebook icon icon--xs"></i></a></li-->
+                    <li><a href="https://www.instagram.com/lnpoint"><i class="socicon socicon-instagram icon icon--xs"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+
+{% endblock footer %}

@@ -1,0 +1,333 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %} Available Soon {% endblock %}
+
+{% block header %} Available Soon {% endblock %}
+
+{% block content %}
+	{% if messages %}
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+
+
+    <div class="w-container">
+    	<!-- form activity -->
+    	<div class="col-md-offset-1">
+	        <div class="w-col col-sm-12" style="margin-top:10px;">
+	            <div class="panel panel-body card-form-body">
+	                <!-- end Card core design -->
+	                <div class="card-form-title">
+	                   Plan your activity.<br>
+	                </div>
+
+	                <form method="POST" class="ln_act_form" enctype=multipart/form-data action="">
+	                    <input type="hidden" name="csrfmiddlewaretoken" value="i28vM8uLmCyY1OzM1RCz0NBvXIHjnUASqML51AsQRlaBX5lc211mvsZNQq54SGEy">
+                        <input id="id_tag-TOTAL_FORMS" name="tag-TOTAL_FORMS" type="hidden" value="1">
+                        <input id="id_tag-INITIAL_FORMS" name="tag-INITIAL_FORMS" type="hidden" value="0">
+                        <input id="id_tag-MIN_NUM_FORMS" name="tag-MIN_NUM_FORMS" type="hidden" value="0">
+                        <input id="id_tag-MAX_NUM_FORMS" name="tag-MAX_NUM_FORMS" type="hidden" value="1000">
+                        <input id="formLat" name="location_latitude" type="hidden">
+                        <input id="formLon" name="location_longitude" type="hidden">
+                        <input id="formAddress" name="location_name" type="hidden">
+
+		                <ul class="collapsible" data-collapsible="expandable">
+						    <li>
+						      <div class="collapsible-header">&nbsp;Description</div>
+						      <div class="ln_help_tip">
+						        <p>Add name to your activity and describe it with an attractive description. And please add tags that related to your activity e.g. #science #BuatWebDariAwal #TutorMatematika</p>
+						      </div>
+						      <div class="collapsible-body">
+						      	<div class="input-field" style="margin-top:20px;">
+						          <input id="name" type="text" class="">
+						          <label for="name">Activity Name</label>
+						        </div>
+						        <div class="input-field" style="margin-top:20px;">
+						          <textarea id="description" class="materialize-textarea" tabindex="12" style="" rows="10"></textarea>
+						          <label for="description">Description</label>
+						        </div>
+			                    <div class="input-field" style="margin-top:20px; display: inline-block; width: 40%;">
+						          <input id="guest" type="number" class="">
+						          <label for="guest">Max Guests (person)</label>
+						        </div>
+						        <br>
+						        <div class="input-field" style="margin-top:20px; display: inline-block; width: 30%;">
+						          <input id="tag" type="text" class="">
+						          <label for="tag">Tags</label>
+						        </div>
+						        <div style="display: inline-block;font-size: 15px;">
+						        	<a class="add-row" href="javascript:void(0)">Add another tag</a>
+						        </div>
+						    </li>
+						    <li>
+						      <div class="collapsible-header">&nbsp;Location</div>
+						      <div class="collapsible-body">
+						      	<div class="card-form-input">
+			                        <div class="col-xs-8 address-text-box">
+			                            <input id="address" type="textbox" value='{{ openclass.location_name }}' 
+			                            placeholder='Enter location here..' class="form-control">
+			                        </div>
+			                        <div class="col-xs-4">
+			                            <input id="MapCoordinates" type="button" value="Submit Location">
+			                        </div>
+			                    </div>
+			                    <div id="map"></div>
+			                    <div class="map-info-additional">Move marker to adjust location</div>
+						      </div>
+						    </li>
+						    <li>
+						      <div class="collapsible-header">&nbsp;Time</div>
+						      <div class="collapsible-body">
+							    <div class="col-md-12">
+							      <div class="content" style="padding-top: 10px; padding-bottom: 10px;">
+							        <label>Date</label>
+							        <div class="input-group date" id="datepicker" style="margin-top: 10px; margin-bottom: 10px;">
+							          <input class="form-control" data-date-format="DD/MM/YYYY"/><span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+							        </div>
+							        <label>Time</label>
+							        <div class="input-group time" id="timepicker" style="margin-top: 10px; margin-bottom: 10px;">
+							          <input class="form-control"/><span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+							        </div>
+							        <div class="input-field" style="margin-top: 20px; margin-bottom: 10px;">
+							          <input id="duration" type="number" class="">
+							          <label for="duration">Duration (minutes) </label>
+							        </div>
+							      </div>
+							    </div>
+							  </div>
+						    </li>
+						    <li>
+						      <div class="collapsible-header">&nbsp;Price&nbsp;<span class="opt_label">(optional)</span></div>
+						      <div class="collapsible-body">
+						      	<div class="input-field" style="margin-top: 20px; margin-bottom: 10px;">
+							          <input id="price" type="number" class="">
+							          <label for="price">Price (rupiah) </label>
+							        </div>
+						      </div>
+						    </li>
+						</ul>
+					</form>
+
+
+	                <!--
+	                <form method="POST" enctype=multipart/form-data action="">
+	                    <input type="hidden" name="csrfmiddlewaretoken" value="i28vM8uLmCyY1OzM1RCz0NBvXIHjnUASqML51AsQRlaBX5lc211mvsZNQq54SGEy">
+                        <input id="id_tag-TOTAL_FORMS" name="tag-TOTAL_FORMS" type="hidden" value="1">
+                        <input id="id_tag-INITIAL_FORMS" name="tag-INITIAL_FORMS" type="hidden" value="0">
+                        <input id="id_tag-MIN_NUM_FORMS" name="tag-MIN_NUM_FORMS" type="hidden" value="0">
+                        <input id="id_tag-MAX_NUM_FORMS" name="tag-MAX_NUM_FORMS" type="hidden" value="1000">
+                        <input id="formLat" name="location_latitude" type="hidden">
+                        <input id="formLon" name="location_longitude" type="hidden">
+                        <input id="formAddress" name="location_name" type="hidden">
+
+	                <div class="card-form-body">
+	                    
+	                    <hr>
+	                    <div class="card-form-label">
+	                        Choose the place
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Cari tempat dimana saja yang kamu inginkan untuk berbagi pengetahuan dan 
+	                        pengalaman kamu. Mulai dari kafe, lapangan, atau co-working space favorite kamu.
+	                    </div>
+	                    <div class="card-form-input">
+	                        <div class="col-xs-8 address-text-box">
+	                            <input id="address" type="textbox" value='{{ openclass.location_name }}' 
+	                            placeholder='Enter location here..' class="form-control">
+	                        </div>
+	                        <div class="col-xs-4">
+	                            <input id="MapCoordinates" type="button" value="Submit Location">
+	                        </div>
+	                    </div>
+	                    <div id="map"></div>
+	                    <div class="map-info-additional">Move marker to adjust location</div>
+	                    <hr>
+	                    <div class="card-form-label">
+	                        Describe your activity
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Pengalaman dan pengetahuan apa yang ingin kamu bagikan di open class yang kamu buat.
+	                    </div>
+	                    <div class="card-form-input">
+	                        <textarea class="form-control" cols="40" id="id_description" name="description" placeholder="Example : di open class saya, kamu dapat berkonsultasi mengenai Fisika Dasar perkuliahan. Di open class saya dapat menjadi mentor Taekwondo" rows="10" required=""></textarea>
+	                    </div>
+	                    <hr>
+	                    <div class="card-form-label">
+	                        Choose activity category
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Pilih kategori kelas yang kamu suka mulai dari olahraga, sains
+	                        sosial, dan masih banyak lagi yang bisa kamu bagikan di lnpoint
+	                    </div>
+	                    <div class="card-form-input">
+	                        <select class="form-control" id="id_categories" name="categories" required="">
+								<option value="" selected="selected">---------</option>
+								<option value="1">Test Categories</option>
+							</select>
+	                    </div>
+	                    <hr>
+	                    <div class="card-form-label">
+	                        Add tags for your activity
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Deskripsikan secara garis besar yang ingin kamu lakukan dan topik yang ingin kamu bagikan 
+	                        di open classmu dalam beberapa kata seperti #Chemistry #Sharing #SBMPTN #BuatWebsiteDariAwal
+	                    </div>
+	                    <div class="card-form-input tag-formset">
+	                         <input class="form-control form-tag" id="id_tag-0-tag" name="tag-0-tag" type="text">
+                    			<a class="delete-row" href="javascript:void(0)">Remove tag</a></input>
+                    	</div>
+                    	<a class="add-row" href="javascript:void(0)">Add another tag</a>
+                    
+                    	<hr>
+	                    <div class="card-form-label">
+	                        How many person can join your activity (max)
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Jumlah Guest maksimum yang dapat menghadiri kelas kamu
+	                    </div>
+	                    <div class="card-form-input">
+	                        <input class="form-control" id="id_maximum_guest" name="maximum_guest" placeholder="Jumlah peserta  maksimum kelas" type="number" required="">
+	                    </div>
+	                    <hr>
+	                    <div class="card-form-label">
+	                        How much your class cost
+	                    </div>
+	                    <div class="card-form-label-info">
+	                        Finally, Harga untuk kegiatan kali ini.<br> <i>Harga tersebut per activity bukan per orang. Rata - rata harga : 50000</i>
+	                    </div>
+	                    <div class="card-form-input">
+	                        <input class="form-control" id="id_fee" name="fee" placeholder="Harga open class per sesi (IDR)" type="number" required="">
+	                    </div>
+	                    <hr>
+	                    <input type="submit" value="Post" class="card-btn-submit">
+	                </div>
+	                </form>
+	            -->
+	            </div>
+	        </div>
+	    </div>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+        <script src="{% static 'js/jquery.formset.js' %}"></script>
+        <script>
+            $('.tag-formset').formset({
+                prefix: '{{ tag_formset.prefix }}',
+                deleteText:'Remove tag',
+
+                addText: 'Add another tag' ,
+                 });
+
+
+            function initMap() {
+                let latlng = new google.maps.LatLng(-6.890891, 107.610368);
+                let image = "{% static 'image/map_marker1.png' %}";
+                const map = new google.maps.Map(document.getElementById('map'), {
+                clickableIcons:false,
+                zoom: 17,
+                center: latlng,
+                styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"poi.attraction","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}],
+                });
+
+                var firstMarker = new google.maps.Marker({
+                    map:map,
+                    position: latlng,
+                    draggable: true,
+                    icon:image,
+                })
+                
+                google.maps.event.addListener(firstMarker,'dragend',function(){
+                document.getElementById('formLat').value = firstMarker.getPosition().lat();
+                document.getElementById('formLon').value = firstMarker.getPosition().lng();
+                document.getElementById('formAddress').value = document.getElementById('address').value;
+                });
+
+                var geocoder = new google.maps.Geocoder();
+
+                function geocodeAddress(geocoder, resultsMap) {
+                    var address = document.getElementById('address').value;
+                    geocoder.geocode({'address': address}, function(results, status) {
+                        if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location,
+                            draggable: true,
+                            icon:image,
+                            });
+
+                        document.getElementById('formLat').value = marker.getPosition().lat();
+                        document.getElementById('formLon').value = marker.getPosition().lng();
+                        document.getElementById('formAddress').value = address;
+
+                        google.maps.event.addListener(marker,'dragend',function(){
+
+                        document.getElementById('formLat').value = marker.getPosition().lat();
+                        document.getElementById('formLon').value = marker.getPosition().lng();
+                        document.getElementById('formAddress').value = address;
+                            })
+
+                        } 
+                        else {
+                        alert('Maaf lokasi yang kamu cari tidak ada');
+                        }
+                    });
+                };
+
+                document.getElementById('MapCoordinates').addEventListener('click', function() {
+                    firstMarker.setMap(null);
+                    geocodeAddress(geocoder, map);
+                    marker.setMap(null)
+                });
+                
+            }
+        </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkFy77ZHS21_yRJIa9_8a5aQdEyLCorZI&callback=initMap">
+    </script>
+	
+
+    <!-- For collapsing section -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  	<script type="text/javascript">
+  		$('.collapsible-header').click(function(){
+		 $(this).toggleClass('open'); 
+		});
+
+		if (/Mobi/.test(navigator.userAgent)) {
+		  // if mobile device, use native pickers
+		  $(".date-time input").attr("type", "datetime-local");
+		  $(".date input").attr("type", "date");
+		  $(".time input").attr("type", "time");
+		} else {
+		  // if desktop device, use DateTimePicker
+		  $("#datepicker").datetimepicker({
+		    format: "L",
+		    icons: {
+		      next: "fa fa-chevron-right",
+		      previous: "fa fa-chevron-left"
+		    }
+		  });
+		  $("#timepicker").datetimepicker({
+		  	format: 'HH:mm',
+		    icons: {
+		      up: "fa fa-chevron-up",
+		      down: "fa fa-chevron-down"
+		    }
+		  });
+		}
+
+  	</script>
+
+
+{% endblock %}

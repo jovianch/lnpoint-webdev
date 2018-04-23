@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Activity | {{activity.name}}{% endblock %}
+
+{% block header %}Activity | {{activity.name}}{% endblock %}
+
+{% block content %}
+	    <div class="w-col">
+	        <div class="panel card-body ln_act_full">
+		        <a href="{{ activity.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+		            <div class="card-top-image" style="background: url({{activity.partner.avatar.url}})
+		            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+		            <div class="card-top-text"> {{activity.partner}} </div>
+		        </a>
+
+		        <div class="w-col col-xs-12 ">
+		    		<div class="act-img" style="background-image: url({{activity.photo.url}})"></div>
+		      	</div>
+
+		      	<section class="ln_act_thum_prop"> 
+					{% if request.user in user_who_liked %}
+					<input id="state" type="hidden" value="unlike">
+					<a id="like" class="ln_thum_like liked" role="button" aria-disabled="false">
+						<span class="like_img liked">unlike</span>
+					</a>
+					{% else %}
+					<input id="state" type="hidden" value="like">
+					<a id="like" class="ln_thum_like" role="button" aria-disabled="false">
+						<span class="like_img">like</span>
+					</a>
+					{% endif %}
+					<!--a class="ln_thum_comment" role="button">
+						<span class="comment_img">Comment</span>
+					</a>
+					<a class="ln_thum_rate" href="#" role="button" aria-disabled="false">
+						<span class="rate_img">4.1</span>
+					</a-->
+				</section>
+				<section class="ln_act_thum_count">
+					<div class="ln_count_container">
+						<a class="ln_thum_likes" >
+							<span id="numberoflikes">{{activity.liked_by.all|length}}</span> likes
+						</a>
+						&nbsp;&nbsp;
+						<!--a class="ln_thum_comments">
+							<span>75</span> comments
+						</a-->
+					</div>
+				</section>
+
+		      	<div class="w-col col-xs-12 " style="margin-top: 7px;">
+					<input id="tab1" type="radio" name="tabs" checked>
+					<label class="tab_title" for="tab1">Post</label>
+
+					<input id="tab2" type="radio" name="tabs">
+					<label class="tab_title" for="tab2">Plan</label>
+
+					<section id="content1" class="panel-body">
+						<div class="card-class class-description-list ln_act_title">
+			        		<strong> [ {{activity.name}} ] </strong>
+			        	</div>
+
+						<div class="card-class class-description-list ln_act_desc">
+		                  {{activity.caption}}
+				        </div>
+
+				        <div class="card-class tag-container">
+                            {% for tag in activity.tags.all %}
+                            # {{tag}}
+                            {% endfor %}
+				        </div>
+					</section>
+
+					<section id="content2" class="panel-body ln_act">
+						<div class="card-class class-description-list ln_act_desc">
+			                  {{activity.description}}
+			            </div>
+			            <div class="card-class class-properties">
+			              <div class="w-col col-xs-6">
+			                  <i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>{{activity.date_held}}</strong> <br>
+			                  <i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>{{activity.time}} WIB</strong> <br>
+							  {% if activity.fee %}
+							  <i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR {{activity.fee}}</strong> <br>
+								{% endif %}             
+			              </div>
+			              <div class="w-col col-xs-6">
+			                <i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+			                <div class="ln_act_loc">{{ activity.location_name }}</div>
+			                <a target="_blank" href="http://maps.google.com/maps?q={{ activity.location_latitude }},{{ activity.location_longitude }}">
+			                  <i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+			                  <span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+			                </a><br>
+			              </div>
+			            </div>
+			            <div class="card-class"><br><br><br><br><br>
+                            <div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+			                  <div class="ln_act_members_container">
+								{% if activity.guest.all %}
+									{% for member in activity.guest.all|slice:":1" %}
+									<a href="{{ member.profile.get_absolute_url }}">
+									<div class="ln_oc ln_act_members_1">
+										<div class="ln_oc_container">
+											<span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+											</span>
+										</div>
+									</div>
+									</a>
+									{% endfor %}
+									{% for member in activity.guest.all|slice:"1:2" %}
+									<a href="{{ member.profile.get_absolute_url }}">
+									<div class="ln_oc ln_act_members">
+										<div class="ln_oc_container">
+											<span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+											</span>
+										</div>
+									</div>
+									</a>
+									{% endfor %}
+									{% if activity.guest.all|slice:"2:"%}
+									<div class="ln_oc ln_act_members">
+										<div class="ln_oc_container ln_act_extra_members">
+										<span class="">
+											<b>+{{activity.guest.all|slice:"2:"|length}} more</b> 
+										</span>
+										</div>
+								</div>
+									{% endif %}
+								{% else %}
+									<div class="ln_oc ln_act_members_1">
+										<div class="ln_oc_container">
+										<span>No guest yet.</span>
+										</div>
+									</div>
+								{% endif %}
+	                  </div>
+			            </div>
+					</section>
+
+		      	</div>
+
+		        
+	        	<div class="card-class ln_full_comment">
+		        	<ul class="ln_comments_container">
+						{% if request.user.profile == activity.partner %}
+						<a class="ln_cmt_more" href="{% url 'activity:delete' activity.pk %}" role="button"><!--Load more comments--><i class="fa fa-window-close" aria-hidden="true"></i> remove post </a>
+						{% else %}
+						<a class="ln_cmt_more" href="#" role="button"><!--Load more comments-->-</a>
+						{% endif %}
+						<!--li class="ln_comment">
+							<a class="ln_commenter" title="" href="">cornelius.aldo</a>
+							<span>belom siap pak</span>
+						</li>
+						<li class="ln_comment">
+							<a class="ln_commenter" title="" href="">gustitriandi</a>
+							<span>woe, bang kapan kita meeting lagi ni? next kita betutu lah ya. tapi harus semua dateng</span>
+						</li>
+						<li class="ln_comment">
+							<a class="ln_commenter" title="" href="">alsolskjaer</a>
+							<span>ya kita siap siap aja lah ya, yaudah.</span>
+						</li-->
+					</ul>
+
+					<!--form method="POST" enctype=multipart/form-data action="" autocomplete="off">
+	                <div class="card-chat-sending">
+	                    <div class="card-chat-sending-textbox">
+	                        <input class="form-control form-chat" id="id_message" name="message" placeholder="add comment here..." type="text" required="">
+	                    </div>
+	                    <button type="submit" class="card-chat-btn-send"><i class="fa fa-send" style="color:#fff; margin-left: -2px;" aria-hidden="true"></i></button>
+	                </div>
+                    </form-->
+	          	</div>
+	        </div>
+	    </div>
+                    
+{% endblock %}
+
+{% block js %}
+		<script>
+			var state = document.getElementById('state').value;
+			console.log(state);
+			$("#like").click(function() {
+				if (state == "like") {
+		     		console.log("like");
+		     		var request = $.ajax({
+			        	url: "/activity/{{activity.pk}}/like",
+			        	type: "get",
+		   			});
+		   			state = "unlike";
+		   			$('#like').addClass('liked');
+		   			var numberoflikes = document.getElementById('numberoflikes').innerText;
+		   			document.getElementById('numberoflikes').innerText = parseInt(numberoflikes) + 1;
+		   		} else {
+		   			console.log("unlike");
+		     		var request = $.ajax({
+			        	url: "/activity/{{activity.pk}}/unlike",
+			        	type: "get"
+		   			});
+		   			state = "like";
+		   			$('#like').removeClass('liked');
+		   			var numberoflikes = document.getElementById('numberoflikes').innerText;
+		   			console.log(numberoflikes);
+		   			document.getElementById('numberoflikes').innerText = parseInt(numberoflikes) - 1;
+		   		}
+	    	});
+		</script>
+{% endblock %}

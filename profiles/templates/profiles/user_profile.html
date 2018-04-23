@@ -1,0 +1,293 @@
+{% extends "layout.html" %}
+{% block title_tag %}Lnpoint | @{{profile.user.username}}{% endblock %}
+{% load static %}
+
+{% block header %}
+  @{{profile.user.username}} profile 
+  <a href="{% url 'accounts:signout' %}" > <div class="ln_logout_btn"></div> </a>
+{% endblock %}
+
+
+{% block content %}
+<!-- PROFILE -->
+  <div class="w-container">
+      <div class="w-row profile-info-wrapper">
+        <div class="panel panel-body card-body-stretch">
+          <div class="col-sm-8 col-sm-offset-2">
+
+            <div>
+              <div class="col-xs-12">
+                <div class="profile-avatar" style="background: url('{{ profile.avatar.url }}')
+                                  scroll center / cover #ccc; height: 35vw; width:35vw; max-width:140px; max-height:140px;border-radius: 50%;margin: auto;">
+              </div>
+            </div>
+            <div class="col-xs-12 profile-info">
+              <div> <h4 class="font-weight-600"> @{{ profile.user.username }}</h4></div>
+                  {% if profile.user.is_verified %}
+                  <div> <h5> <i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ profile.user.institution }} </h5></div>
+                  <div> <h5>  <i class="fa fa-check-circle verified-icon" aria-hidden="true"></i> Partner verified with <i class="fa fa-address-card" aria-hidden="true"></i> </h5></div>
+                  {% else %}
+                  <div> <h5> User unverified </h5></div>
+                  {% endif %}
+                  {% ifequal request.user profile.user %}
+
+                 <div> <a href="{% url 'profiles:editprofile' profile.pk %}"
+                  class="btn-edit-profile btn btn-success btn-block btn-profile btn-up"
+                  style="background: #F62459 !important;">
+                         Edit profile
+                 </a> </div>
+
+                  {% endifequal %}
+
+                {% ifnotequal request.user profile.user %}
+                  {% if user_followed %}
+                    <div>
+                      <input id="state" type="hidden" value="followed"> 
+                      <a id="follow" class="btn-follow-profile btn btn-success btn-block btn-profile btn-up"
+                      style="background-color:#F62459 !important"> Unfollow </a>
+                    </div>
+                  {% else %}
+                  <div>
+                    <input id="state" type="hidden" value="unfollowed">
+                    <a id="follow" class="btn-follow-profile btn btn-success btn-block btn-profile btn-up"
+                    style="background-color:#F62459 !important"> Follow </a>
+                  </div>
+                  {% endif %}
+                {% endifnotequal %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+          <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel card-bio center-bio">
+              <div class="card-profile-bio-follows">
+                <b>{{ profile.user.fullname|title }}</b>{% if profile.bio %} {{ profile.bio }}{% endif %}
+              </div>
+              <div class="card-profile-bio-follows">
+                  <b id="numberoffollows"> Following : {{ profile.user.follows.count }} Followers : {{ profile.user.followers.count }}</b>
+              </div>
+            </div>
+          </div>
+        {% for openclass in openclass_list %}
+          <div class="w-col">
+                <div class="panel card-body">
+                  <a href="{{ openclass.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+                    <div class="card-top-image" style="background: url('{{ openclass.partner.avatar.url }}')
+                    scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                    <div class="card-top-text">
+                       {{ openclass.partner.user.fullname|title }}'s {% for category in openclass.categories.all %}{{ category.name|title }} {% endfor %} Open Class
+                    </div>
+                 </a>
+                 <div class="panel-body">
+                  <div class="card-class class-description-list">
+                        {{ openclass.description|slice:":180" }}
+                  </div>
+                  <div class="card-class class-properties">
+                <div class="w-col col-xs-12">
+                <strong>
+								 {% if openclass.fee %}
+								  IDR {{openclass.fee}}
+								 {% endif %}
+                </strong>
+                <br>  
+              </div>                      
+						<div class="w-col col-xs-12">
+							<i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+										<!-- <br>{{ openclass.location_name|title }}<br> -->
+										{{openclass.location_name}}<br>
+										<a target="_blank" href="http://maps.google.com/maps?q={{ openclass.location_latitude }},{{ openclass.location_longitude }}">
+											<i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+											<span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+										</a><br>
+            </div>   
+						<div class="w-col col-xs-12">
+                             <strong>
+								 {% if openclass.is_active %}
+								  This open class is available <i class="fa fa-circle fa-available" aria-hidden="true"></i>
+								 {% else %}
+								  This open class is not available <i class="fa fa-circle fa-not-available" aria-hidden="true"></i>
+								 {% endif %}
+								</strong><br>  
+
+                      </div>    
+                    </div>
+                    <div class="card-class class-button">
+                      {% if openclass.partner != request.user.profile %}
+                        <a href="{% url 'usermessages:chatbox' openclass.partner %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                        style="background-color: #03C9A9; !important;">Ask for activity</a>
+                      {% else %}
+                        <a href="{% url 'kelas:edit' openclass.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                        style="background-color: #03C9A9; !important;">Edit open class</a>
+                      {% endif %}
+                    </div>
+                  </div>         
+                </div>
+            </div>
+
+      {% endfor %}
+      {% for activity in activity_list %}
+        <div class="w-col">
+	        <div class="panel card-body ln_act_thumb">
+		        <a href="{% url 'activity:detail' activity.pk %}" class="panel-top card-top-list panel-body">
+		            <div class="card-top-image" style="background: url('{{activity.partner.avatar.url}}')
+		            scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+		            <div class="card-top-text"> {{activity.partner.user.fullname|title}}'s activity </div>
+		        </a>
+
+		        <div class="w-col col-xs-12 ">
+		    		<div class="act-img" style="background-image: url('{{activity.photo.url}}')"></div>
+		      	</div>
+
+		      	<section class="ln_act_thum_prop">
+					{% if activity.is_liked %}
+                <input id="state-{{activity.pk}}" type="hidden" value="unlike">
+                <a id="like-{{activity.pk}}" class="ln_thum_like liked" role="button" aria-disabled="false">
+                  <span class="like_img liked">unlike</span>
+                </a>
+                {% else %}
+                <input id="state-{{activity.pk}}" type="hidden" value="like">
+                <a id="like-{{activity.pk}}" class="ln_thum_like" role="button" aria-disabled="false">
+                  <span class="like_img">like</span>
+                </a>
+                {% endif %}
+                <!--a class="ln_thum_comment" href="#" role="button">
+                  <span class="comment_img">Comment</span>
+                </a>
+                <a class="ln_thum_rate" href="#" role="button" aria-disabled="false">
+                  <span class="rate_img">4.5</span>
+                </a-->
+              </section>
+
+              <section class="ln_act_thum_count">
+                <div class="ln_count_container">
+                  <a class="ln_thum_likes" href="#">
+                    <span id="numberoflikes-{{activity.pk}}">{{activity.liked_by.all|length}}</span> likes
+                  </a>
+                  &nbsp;&nbsp;
+						<!--a class="ln_thum_comments" href="#">
+							<span>18</span> comments
+						</a-->
+					</div>
+				</section>
+
+		        <div class="panel-body">
+		        	<div class="card-class class-description-list ln_act_title">
+		        		<strong> [ {{ activity.name }} ] </strong>
+		        	</div>
+		          
+		          	<div class="card-class class-description-list ln_act_desc">
+			                  {{activity.caption}}
+			        </div>
+
+              <div class="card-class tag-
+                      
+              ">
+                {% for tag in activity.tags.all %}
+                #{{tag}}
+                {% endfor %}
+			        </div>
+		          
+		            <div class="card-class class-button">
+		                <a href="{% url 'activity:detail' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+		                style="background-color: #03C9A9; !important;">View Activity</a>
+		            </div>
+		        </div>
+	        </div>
+	    </div>
+
+      {% endfor %}
+  </div>
+  <div class="block-20px"></div>
+{% endblock %}
+
+{% block js %}
+    <script>
+      {% ifnotequal request.user profile.user %}
+
+      var firstState = document.getElementById('state').value; 
+      var state = document.getElementById('state').value;
+      console.log(state);
+      $("#follow").click(function() {
+        if (state == "unfollowed") {
+            console.log("unfollowed");
+            var request = $.ajax({
+                url: "/{{profile.pk}}/follow",
+                type: "get",
+            });
+            state = "followed";
+            document.getElementById('follow').innerText = 'Unfollow';
+            if (firstState == "unfollowed") {
+              var followers = parseInt("{{ profile.user.followers.count }}") + 1;
+            } else {
+              var followers = parseInt("{{ profile.user.followers.count }}");
+            }
+          } else {
+            console.log("followed");
+            var request = $.ajax({
+                url: "/{{profile.pk}}/unfollow",
+                type: "get"
+            });
+            state = "unfollowed";
+            document.getElementById('follow').innerText = 'Follow';
+            if (firstState == "followed") {
+              var followers = parseInt("{{ profile.user.followers.count }}") - 1;
+            } else {
+              var followers = parseInt("{{ profile.user.followers.count }}");
+            }
+          }
+          document.getElementById('numberoffollows').innerText = 'Following : {{ profile.user.follows.count }} Followers : ' + followers;
+        });
+
+        {% endifnotequal %}
+
+        /* activity like javascript */
+
+      const activityPk = [];
+      const likeState = [];
+      let i = 0;
+
+      {% for activity in activity_list %}
+
+        likeState[i] = document.getElementById('state-{{activity.pk}}').value;
+        activityPk[i] = {{activity.pk}};
+        i = i+1;
+
+      {% endfor %}
+
+      activityLike(likeState, activityPk);
+
+      function activityLike(state, activityPk){
+        const likeId = [];
+        const numberOfLikesPk = [];
+        for(let i = 0; i<state.length; i++){
+          likeId[i] = "#like-" + String(activityPk[i]);
+          numberOfLikesPk[i] = "numberoflikes-" + String(activityPk[i]);
+          $(likeId[i]).click(function() {
+          if (state[i] == "like") {
+              console.log("like");
+              var request = $.ajax({
+                  url: "/activity/"+String(activityPk[i])+"/like",
+                  type: "get",
+              });
+              state[i] = "unlike";
+              $(likeId[i]).addClass('liked');
+              let numberoflikes = document.getElementById(numberOfLikesPk[i]).innerText;
+              document.getElementById(numberOfLikesPk[i]).innerText = parseInt(numberoflikes) + 1;
+            } else if (state[i] == "unlike") {
+              console.log("unlike");
+              var request = $.ajax({
+                  url: "/activity/"+String(activityPk[i])+"/unlike",
+                  type: "get"
+              });
+              state[i] = "like";
+              $(likeId[i]).removeClass('liked');
+              let numberoflikes = document.getElementById(numberOfLikesPk[i]).innerText;
+              console.log(numberoflikes);
+              document.getElementById(numberOfLikesPk[i]).innerText = parseInt(numberoflikes) - 1;
+            }
+          });          
+        }
+      }
+    </script>
+{% endblock %}

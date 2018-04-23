@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %} Inbox | {{ request.user.username }}{% endblock %}
+
+{% block header %}Messages{% endblock %}
+
+{% block content %}
+<!-- Card Core design -->
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel card-form-body card-inbox">
+                <!-- end Card core design -->
+                <div class="card-inbox-header">
+                    Inbox
+                </div>
+                <div class="card-inbox-body">
+                {% for user in users_sender %}
+                    <div class="card-inbox-container">
+                        <a href="">
+                        <div class="card-top-image" style="background: url('{{ user.profile.avatar.url }}')
+                        scroll center / cover #ccc;"></div>
+                        </a>
+                        <div class="card-inbox-text">
+                            <a href="">
+                            <div class="card-inbox-name">
+                                    {{ user.fullname|title }}
+                            </div>
+                            </a>
+                            <div class="card-inbox-msg">
+                                    Kamu mendapatkan pesan!
+                            </div>
+                        </div>
+
+                        <a href="{% url 'usermessages:chatbox' user.username %}" class="card-inbox-chat-btn">
+                            Chat
+                        </a>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}

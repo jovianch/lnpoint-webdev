@@ -1,0 +1,100 @@
+
+{% extends "layout_landingpage.html" %}{% load i18n %}
+{% load static from staticfiles %}
+
+
+    {% block content %}
+     <!-- BODY -->
+        <div class="main-container">
+            <a id="cover-form-4" class="in-page-link"></a>
+            <section class="text-center imagebg space--lg height-100" data-overlay="3">
+                <div class="background-image-holder">
+                    <img alt="background" src="{% static 'image/itb.jpg' %}" />
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-md-6">
+                            <h1 style="font-weight:700;">Journey of the sharing society has begun</h1>
+                            <p class="lead">
+                                lnpoint merupakan sebuah <b>sharing platform</b> untuk kamu yang ingin berbagi pengalaman dan pengetahuan yang 
+                                kamu punya dengan cara membuat kelasmu sendiri secara mudah, aman, dan flexible
+                            </p>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section class="text-center" id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="feature feature-8"> <img alt="Image" src="{% static 'image/sprites/sprite_world.jpg '%}">
+                                <h3>Place</h3>
+                                <span>Kamu dapat mencari dan membuat kelas sesuai dengan tempat dan partner yang kamu mau. Mulai dari cafe hingga coworking space favoritemu</span>
+                                </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="feature feature-8"> <img alt="Image" src="{% static 'image/sprites/sprite_hi.jpg' %}">
+                                <h3>People</h3>
+                                <span>Kamu dapat belajar secara langsung dengan orang disekitarmu . Mengenal dan menambah teman baru.</span>
+                                </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="feature feature-8"> <img alt="Image" src="{% static 'image/sprites/sprite_puzzle.jpg '%}">
+                                <h3>Community</h3>
+                                <span>Kamu dapat mencari partner dari berbagai komunitas dan keahlian seperti ice skating, dasar pemrograman, calculus dan masih banyak lagi.</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="text-center imagebg jadi-bagian-sharing">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-md-6">
+                            <div class="cta">
+                                <h2>Ayo jadi bagian dari <br> sharing society!</h2>
+                                <a class="btn btn-round btn--sm type--uppercase inner-link" href="{% url 'accounts:signup' %}"> <span class="btn__text">
+                            Sign up
+                        </span></a>
+                                <p class="type--fine-print">have question? contact us<a href="{% url 'contactus' %}"> here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="imageblock feature-large">
+                                <div class="imageblock__content col-md-6 col-sm-4 pos-right">
+                                    <div class="background-image-holder">
+                                        <img alt="image" src="{% static 'image/about_picture.jpg' %}" />
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-7 feature feature-8 about-us">
+                                            <h3 style="color:black;">Who We Are</h3>
+                                            <span>
+                                                we started in March 2017 as a small team of passionate ITB students. 
+                                                Holed up in a coffee shop to another co working space, we laid out our mission 
+                                                and the values that would guide our way. Our mission is to simplify the way people sharing, 
+                                                and the values are simplicity, flexibility, and best quality.
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--end of row-->
+                                </div>
+                                <!--end of container-->
+                            </section>
+        </div>
+
+            {% endblock %}
+
+
+            {% block js %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="{% static 'js/index/scripts.js' %}"></script>
+            {% endblock %}

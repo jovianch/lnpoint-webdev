@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Activity Done!{% endblock %}
+
+{% block header %}Activity Done!{% endblock %}
+
+{% block content %}
+
+<!-- Card Core design -->    
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel panel-body card-form-body">
+                <!-- end Card core design -->
+                <div class="card-form-title">
+                   Congratulations! Your {{ activity.name|title }} activity has been held<br>
+                </div>
+                <div class="card-form-subtitle">   
+                    Add photos, and simply post your activity to share experience with your friends.
+                    <br>
+                </div>
+                <!-- post activity -->
+                <div class="w-col">
+                <div class="panel panel-body info-section ln_upload_act">
+                    <form method="POST" enctype=multipart/form-data action="{% url 'activity:done' object.pk %}">
+                        {% csrf_token %}
+                        <!-- preview -
+                        <div class="card-class">
+                            <div class="act-upl-img" style=""><span style="opacity:0.3;">put an image of your activity</span></div>
+                        </div>
+                        -->
+
+                        <!-- <div>{{ profile_form.avatar }}</div> -->
+                        <div>{{form.photo}}</div>
+                        <div class="w-col col-xs-12 ">
+                            <div id="avatar" class="act-img" style="background-color:grey;"></div>
+                        </div>
+                        <div class="upl_info">
+                            <div class="upl_fail">
+                                <i class="fa fa-times-circle" style="color: red" aria-hidden="true"></i>
+                            </div>
+                            <div class="upl_succ">
+                                <i class="fa fa-check-circle" style="color: green" aria-hidden="true"></i>
+                            </div>
+                            <span class="upl_filename">nothing selected</span>
+                        </div>
+                        <div class="card-class class-button act-img-upl-container">
+                            <a id="id_act_upl_btn" href="#" class="btn btn-success btn-block btn-profile btn-up btn-stretch">
+                            <i class="fa fa-upload" style="color: grey" aria-hidden="true"></i>
+                                Select Image
+                            </a>
+                        </div>
+
+                        <div class="card-class">
+                            {{ form.caption }}
+                            {{ form.caption.errors }}
+                            {{ form.photo.errors }}
+                            {{ form.non_field_errors }}
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                <input type="submit" value="Post Activity" class="card-btn-submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+                <a class="ln_cmt_more" href="{% url 'activity:delete' activity.pk %}" role="button"><i class="fa fa-window-close" aria-hidden="true"></i> Cancel this activity and remove post </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    	$("#id_act_upl_btn").click(function(){
+    		$("#id_act_img").click();
+    	});
+
+        $("#id_act_img").change(function (){
+            if ($("#id_act_img").prop('files') && $("#id_act_img").prop('files')[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#avatar').css('background', 'url(' + e.target.result + ')');
+                    $('#avatar').css('background-size', 'contain');
+                };
+
+                reader.readAsDataURL($("#id_act_img").prop('files')[0]);
+            }
+
+           var fileName = $(this).val();
+
+           if (fileName == "") {
+            $(".upl_filename").html('nothing selected');
+            $("#avatar").css('background', 'none');
+            $("#avatar").css('background-color', 'grey');
+            $(".upl_fail").css('display', 'inline-block');
+            $(".upl_succ").css('display', 'none');
+           } else {
+            $(".upl_filename").html(fileName);
+            $(".upl_fail").css('display', 'none');
+            $(".upl_succ").css('display', 'inline-block');
+           }
+           
+        });
+
+        $(".upl_filename").change(function (){
+           var fileName = $(this).val();
+           $(".upl_filename").html(fileName);
+        });
+</script>
+
+{% endblock %}

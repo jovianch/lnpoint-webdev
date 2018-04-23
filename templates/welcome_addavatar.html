@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Add Avatar{% endblock %}
+
+{% block header %}Add Avatar{% endblock %}
+
+{% block content %}
+
+<!-- Card Core design -->    
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel panel-body card-form-body" style="height: 500px;">
+                <!-- end Card core design -->
+                <!--div class="card-form-title">
+                   Congratulations! Your {{ activity.name|title }} activity has been held<br>
+                </div-->
+                <div class="card-form-subtitle" style="text-align:center">   
+                    Add a profile picture
+                    <br>
+                    <span>before we get started<span>
+                </div>
+                <!-- post activity -->
+                <div class="w-col">
+                <div class="panel panel-body info-section ln_upload_act" style="height:350px !important">
+                    <form method="POST" enctype=multipart/form-data>
+                        <div class="lnr lnr-user" style="font-size:70px; margin-top:30px;"></div><br>
+                        <div style="margin-top:20px">add a profile picture so people know you</div>
+                        {% csrf_token %}
+                        <!-- preview -
+                        <div class="card-class">
+                            <div class="act-upl-img" style=""><span style="opacity:0.3;">put an image of your activity</span></div>
+                        </div>
+                        -->
+
+                        <!-- <div>{{ profile_form.avatar }}</div> -->
+                        <div>{{form.avatar}}</div>
+                        <!--div class="upl_info">
+                            <div class="upl_fail">
+                                <i class="fa fa-times-circle" style="color: red" aria-hidden="true"></i>
+                            </div>
+                            <div class="upl_succ">
+                                <i class="fa fa-check-circle" style="color: green" aria-hidden="true"></i>
+                            </div>
+                            <span class="upl_filename">nothing selected</span>
+                        </div-->
+                        <div class="card-class class-button act-img-upl-container" style="margin-top: 70px;">
+                            <a id="id_act_upl_btn" href="#" class="btn btn-success btn-block btn-profile btn-up btn-stretch">
+                            <i class="fa fa-upload" style="color: grey" aria-hidden="true"></i>
+                                Add Profile Picture
+                            </a>
+                        </div>
+
+                        <div class="card-class">
+                            {{ form.avatar.errors }}
+                            {{ form.non_field_errors }}
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                <input id="submit" type="submit" value="Add Profile Photo" class="card-btn-submit" style="display:none">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-20px"></div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    	$("#id_act_upl_btn").click(function(){
+    		$("#id_act_img").click();
+    	});
+
+        $("input:file").change(function (){
+           var fileName = $(this).val();
+
+           if (fileName == "") {
+            $(".upl_filename").html('nothing selected');
+            $(".upl_fail").css('display', 'inline-block');
+            $(".upl_succ").css('display', 'none');
+           } else {
+            $("#submit").click();
+           }
+           
+        });
+
+        $(".upl_filename").change(function (){
+           var fileName = $(this).val();
+           $(".upl_filename").html(fileName);
+        });
+</script>
+
+{% endblock %}

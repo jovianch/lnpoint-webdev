@@ -1,0 +1,46 @@
+{% extends "layout_landingpage.html" %}{% load i18n %}
+{% load static from staticfiles %}
+
+{% block content %}
+        <div class="main-container">
+                <a id="cover-form-4" class="in-page-link"></a>
+                <section class="imagebg height-100 minh-100 color-bg">
+                    
+                    <div class="container pos-vertical-center">
+                        <div class="row">
+                            <div class="col-sm-7 col-md-4 col-md-offset-4 text-center">
+                                <div class=" boxed formbox boxed--lg bg--white boxed--border boxed-form">
+                                <h3 class="text-center">Sign In</h3>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        {% for field in form %}
+                                        <div class="col-xs-12">
+                                            {{ field }} 
+                                        </div>
+                                        {% if field.errors %}    
+                                        <div class="col-xs-12">
+                                            {{ field.errors }} 
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {{ form.non_field_errors }}        
+                                        <div class="col-xs-12">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Sign In</button>
+                                        </div>
+                                        <div class="col-xs-12 mb--2"> <!-- span class="type--fine-print"><a href="#">Forget Password?</a></span--> 
+                                            <span class="type--fine-print">
+                                                    <a href="{% url 'about' %}" style="text-decoration:none;">About Us</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="foot text-center"> <span class="type--fine-print">Didn't have an account?
+                                    <a href="{% url 'accounts:signup' %}"> Sign up here</a></span> </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!--end of row-->
+                    </div>
+                </section>
+{% endblock content %}

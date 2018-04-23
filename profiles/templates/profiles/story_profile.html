@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %} {{ partner.user.fullname|title }}'s stories {% endblock %}
+
+{% block header %} {{ partner.user.fullname|title }}'s stories {% endblock %}
+
+{% block content %}
+<div class="w-container">
+	<div class="w-col">
+		<div class="block-20px"></div>
+		<!-- activities pre -->
+
+		{% if flavour == 'full' %}
+		<div class="w-col">
+          <div class="panel panel-body info-section">
+            <span class="font-bold">{{ partner.user.fullname|title }}'s stories
+          </div>
+        </div>
+		{% endif %}
+
+		{% if openclass_list %}
+			{% for openclass in openclass_list %}
+				<div class="w-col">
+                <div class="panel card-body">
+                  <a href="{{ openclass.partner.get_absolute_url }}" class="panel-top card-top-list panel-body">
+                    <div class="card-top-image" style="background: url('{{ openclass.partner.avatar.url }}')
+                    scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+                    <div class="card-top-text">
+                       {{ openclass.partner.user.fullname|title }}'s {% for category in openclass.categories.all %}{{ category.name|title }} {% endfor %} Open Class
+                    </div>
+                 </a>
+                 <div class="panel-body">
+                  <!--div class="card-class class-tag">
+                      <div class="w-col col-xs-12 tag-container">
+                            <div class="w-col col-xs-12 tag-container">
+                      <strong style="color:rgb(0,140,140);">TAGS</strong> {% for tag in openclass.tags.all %} {{ tag.name|title }} |{% endfor %} 
+                    </div>
+                      </div>
+                  </div-->
+                  <div class="card-class class-description-list">
+                        {{ openclass.description|slice:":180" }}
+                  </div>
+                  <div class="card-class class-properties">  
+					  <div class="w-col col-xs-12">
+						<strong>
+										{% if openclass.fee %}
+										IDR {{openclass.fee}}
+										{% endif %}
+						</strong>
+						<br>  
+					</div>                    
+						<div class="w-col col-xs-12">
+							<i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+										<!-- <br>{{ openclass.location_name|title }}<br> -->
+										{{openclass.location_name}}<br>
+										<a target="_blank" href="http://maps.google.com/maps?q={{ openclass.location_latitude }},{{ openclass.location_longitude }}">
+											<i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+											<span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+										</a><br>
+						</div>	  
+						<div class="w-col col-xs-12">
+                             <strong>
+								 {% if openclass.is_active %}
+								  This open class is available <i class="fa fa-circle fa-available" aria-hidden="true"></i>
+								 {% else %}
+								  This open class is not available <i class="fa fa-circle fa-not-available" aria-hidden="true"></i>
+								 {% endif %}
+								</strong><br>  
+
+                      </div>    
+                    </div>
+                    <div class="card-class class-button">
+                      {% if openclass.partner != request.user.profile %}
+                        <a href="{% url 'usermessages:chatbox' openclass.partner %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                        style="background-color: #03C9A9; !important;">Ask for activity</a>
+                      {% else %}
+                        <a href="{% url 'kelas:edit' openclass.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+                        style="background-color: #03C9A9; !important;">Edit open class</a>
+                      {% endif %}
+                    </div>
+                  </div>         
+                </div>
+            </div>
+			{% endfor %}
+		{% endif %}
+
+		{% if activity_list %}
+			{% for activity in activity_list %}
+				<div class="w-col">
+						<div class="panel card-body ln_act">
+							<a href="{{ profile.get_absolute_url }}" class="panel-top card-top-list panel-body">
+								<div class="card-top-image" style="background: url('{{ profile.avatar.url }}')
+								scroll center / cover #ccc;border-radius:50%; margin-right:10px;"></div>
+								<div class="card-top-text">
+								<p>{{ activity.name }}
+									<br><span class="ln_act_owner">by {{ activity.partner.user.fullname|title }}</span>
+								</p>
+								</div>
+						</a>
+						<div class="panel-body">
+								<div class="card-class class-description-list ln_act_desc">
+									{{ activity.description }}
+								</div>
+								<div class="card-class class-properties">
+									<div class="w-col col-xs-6">
+											<i class="fa fa-calendar" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>{{activity.date_held}}</strong> <br>
+											<i class="fa fa-clock-o" style="color:#000" aria-hidden="true"></i> &nbsp;&nbsp; <strong>{{activity.time}} WIB</strong> <br>
+											{% if activity.fee %}
+											<i class="fa fa-money" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>IDR {{activity.fee}}</strong> <br>
+											{% endif %}             
+									</div>
+									<div class="w-col col-xs-6">
+										<i class="fa fa-map-marker" style="color:#000" aria-hidden="true"></i> &nbsp; <strong>Location</strong>
+										<!-- <br>{{ openclass.location_name|title }}<br> -->
+										<div class="ln_act_loc">{{activity.location_name}}</div>
+										<a target="_blank" href="http://maps.google.com/maps?q={{ activity.location_latitude }},{{ activity.location_longitude }}">
+											<i class="fa fa-map-o" style="color:#03C9A9" aria-hidden="true"></i>
+											<span style="color:#03C9A9; font-weight:500;font-size: 12px;"> open map </span>
+										</a><br>
+									</div>
+									<br>
+								</div>
+								
+								<div class="card-class"><br><br><br><br>
+										<div style="text-align: center">
+										{% if activity.partner != request.user.profile %}
+											<a href="{% url 'usermessages:chatbox' activity.partner %}" style="color:#000 !important; font-size:12px !important;">
+											<i class="fa fa-envelope" style="color:#000" aria-hidden="true"></i><u> message partner</u></a>
+										{% endif %}
+										</div>
+									<br>
+											<div style="font-weight:700;font-size: 12px;"><i class="fa fa-users" style="color:#000" aria-hidden="true"></i>&nbsp; Participants : </div>
+											<div class="ln_act_members_container">
+												{% if activity.guest.all %}
+													{% for member in activity.guest.all|slice:":1" %}
+													<a href="{{ member.profile.get_absolute_url }}">
+													<div class="ln_oc ln_act_members_1">
+														<div class="ln_oc_container">
+															<span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+															</span>
+														</div>
+													</div>
+													</a>
+													{% endfor %}
+													{% for member in activity.guest.all|slice:"1:2" %}
+													<a href="{{ member.profile.get_absolute_url }}">
+													<div class="ln_oc ln_act_members">
+														<div class="ln_oc_container">
+															<span class="ln_oc_img_container" style="background-image: url('{{ member.profile.avatar.url }}')">
+															</span>
+														</div>
+													</div>
+													</a>
+													{% endfor %}
+													{% if activity.guest.all|slice:"2:"%}
+													<div class="ln_oc ln_act_members">
+														<div class="ln_oc_container ln_act_extra_members">
+														<span class="">
+															<b>+{{activity.guest.all|slice:"2:"|length}} more</b> 
+														</span>
+														</div>
+												</div>
+													{% endif %}
+												{% else %}
+													<div class="ln_oc ln_act_members_1">
+														<div class="ln_oc_container">
+														<span>No guest yet.</span>
+														</div>
+													</div>
+												{% endif %}
+												</div>
+								</div>
+								{% if activity.partner != request.user.profile %}
+									{% if request.user in activity.guest.all %}
+									<div class="card-class class-button">
+										<a href="{% url 'activity:unjoin' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #d3d3d3; !important;">Unjoin Activity</a>
+									</div>
+									{% else %}
+								<div class="card-class class-button">
+										<a href="{% url 'activity:join' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #03C9A9; !important;">Join Activity</a>
+								</div>
+									{% endif %}
+								{% else %}
+								<div class="card-class class-button">
+										<a href="{% url 'activity:delete' activity.pk %}" class="btn btn-success btn-block btn-profile btn-up btn-stretch"
+										style="background-color: #d3d3d3; !important;">Remove Activity</a>
+								</div>
+								{% endif %}
+								</div>
+						</div>
+				</div>
+			{% endfor %}
+		{% else %}
+				<div class="w-col">
+					<div class="panel panel-body info-alert">
+						<span>There is no activity from {{partner.user.fullname}} yet.
+					</div>
+				</div>
+		{% endif %}
+		</div>
+</div>		
+	{% endblock %}
+
+

@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title_tag %}Post | {{ profile.user.username }}{% endblock %}
+
+{% block header %}Post an open class{% endblock %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<!-- Card Core design -->
+<div class="w-container">
+    <div class="col-md-offset-1">
+        <div class="w-col col-sm-10">
+            <div class="panel panel-body card-form-body">
+                <!-- end Card core design -->
+                <div class="card-form-title">
+                   Open Class, the simplest way to share your knowledge and experience.<br>
+                </div>
+                <div class="card-form-subtitle">   
+                     Let's get started to post your open class.<br>
+                </div>
+                <form method="POST" enctype=multipart/form-data action="">
+                    {% csrf_token %}
+                        {{ openclass_form.location_latitude }}
+                        {{ openclass_form.location_longitude }}
+                        {{ openclass_form.location_name }}
+                <div class="card-form-body">
+                    <hr>
+                    <div class="card-form-label">
+                        Choose open class category
+                    </div>
+                    <div class="card-form-label-info">
+                        Pilih kategori kelas yang kamu suka mulai dari olahraga, sains
+                        sosial, dan masih banyak lagi yang bisa kamu bagikan di lnpoint
+                    </div>
+                    <div class="card-form-input">
+                        {{ openclass_form.categories }}
+                        {{ openclass_form.categories.errors }}
+                    </div>
+                    <div class="card-form-label">
+                        Describe your open class
+                    </div>
+                    <div class="card-form-label-info">
+                        Pengalaman dan pengetahuan apa yang ingin kamu bagikan di open class yang kamu buat.
+                    </div>
+                    <div class="card-form-input">
+                        {{ openclass_form.description }}
+                        {{ openclass_form.description.errors }}
+                    </div>
+                    <hr>
+                    <div class="card-form-label">
+                        Choose the place
+                    </div>
+                    <div class="card-form-label-info">
+                        Cari tempat dimana saja yang kamu inginkan untuk berbagi pengetahuan dan 
+                        pengalaman kamu. Mulai dari kafe, lapangan, atau co-working space favorite kamu.
+                        kamu dapat mengganti tempat kapan saja.
+                    </div>
+                    <div class="card-form-input">
+                        <div class="col-xs-8 address-text-box">
+                            <input id="address" type="textbox" value='{{ openclass.location_name }}' 
+                            placeholder='Enter location here..' class="form-control">
+                        </div>
+                        <div class="col-xs-4">
+                            <input id="MapCoordinates" type="button" value="Submit Location">
+                        </div>
+                    </div>
+                    <div id="map"></div>
+                    <div class="map-info-additional">Move marker to adjust location</div>
+                    <hr>
+                    <div class="card-form-label">
+                        Add Price (Optional)
+                    </div>
+                    <div class="card-form-label-info">
+                        Gratis atau berbayar? Lnpoint memberikan kamu kebebasan!<br><span style="font-family:'Sailec-Light-Italic'"> *Harga yang diberikan per sesi bukan per orang. Harga rata-rata kelas di Lnpoint Rp 50.000 </span>
+                    </div>
+                    <div class="card-form-input">
+                        {{ openclass_form.fee }}
+                        {{ openclass_form.fee.errors }}
+                    </div>
+
+                    <input type="submit" value="Post" class="card-btn-submit">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+
+        <script src="{% static 'js/jquery.formset.js' %}"></script>
+        <script>
+            function initMap() {
+                let latlng = new google.maps.LatLng(-6.890891, 107.610368);
+                let image = "{% static 'image/map_marker1.png' %}";
+                const map = new google.maps.Map(document.getElementById('map'), {
+                clickableIcons:false,
+                zoom: 17,
+                center: latlng,
+                styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"poi.attraction","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.text.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}],
+                });
+
+                var firstMarker = new google.maps.Marker({
+                    map:map,
+                    position: latlng,
+                    draggable: true,
+                    icon:image,
+                })
+                
+                google.maps.event.addListener(firstMarker,'dragend',function(){
+                document.getElementById('formLat').value = firstMarker.getPosition().lat();
+                document.getElementById('formLon').value = firstMarker.getPosition().lng();
+                document.getElementById('formAddress').value = document.getElementById('address').value;
+                });
+
+                var geocoder = new google.maps.Geocoder();
+
+                function geocodeAddress(geocoder, resultsMap) {
+                    var address = document.getElementById('address').value;
+                    geocoder.geocode({'address': address}, function(results, status) {
+                        if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location,
+                            draggable: true,
+                            icon:image,
+                            });
+
+                        document.getElementById('formLat').value = marker.getPosition().lat();
+                        document.getElementById('formLon').value = marker.getPosition().lng();
+                        document.getElementById('formAddress').value = address;
+
+                        google.maps.event.addListener(marker,'dragend',function(){
+
+                        document.getElementById('formLat').value = marker.getPosition().lat();
+                        document.getElementById('formLon').value = marker.getPosition().lng();
+                        document.getElementById('formAddress').value = address;
+                            })
+
+                        } 
+                        else {
+                        alert('Maaf lokasi yang kamu cari tidak ada');
+                        }
+                    });
+                };
+
+                document.getElementById('MapCoordinates').addEventListener('click', function() {
+                    firstMarker.setMap(null);
+                    geocodeAddress(geocoder, map);
+                    marker.setMap(null)
+                });
+                
+            }
+            
+
+        </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkFy77ZHS21_yRJIa9_8a5aQdEyLCorZI&callback=initMap">
+    </script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

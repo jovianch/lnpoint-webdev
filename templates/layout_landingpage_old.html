@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title_tag %}Lnpoint{% endblock %}</title>
+        {% load static from staticfiles %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{% static 'css/index/iconsmind.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/index/theme-greensea.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/index/font-raleway.css' %}" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/png" href="{% static 'image/logo bulat.png' %}" />
+        {% block css %}{% endblock %}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://s3.amazonaws.com/icomoon.io/114779/Socicon/style.css?rd5re8">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.css' %}">
+        <link href="{% static 'css/index/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+    </head>
+           <div class="nav-container">
+            <div class="via-1498886760356" via="via-1498886760356" vio="ABOUT">
+                <div class="bar bar--sm visible-xs">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-2">
+                                <a href="/"> <img class="logo logo-dark logo-resize" alt="logo " src="{% static 'image/bnw.png' %}" style="width:125px;"> <img class="logo logo-light" alt="logo light logo-resize" style="width:125px;" src="{% static 'image/logotulisan2.png' %}"> </a>
+                            </div>
+                            <div class="col-xs-9 col-sm-10 text-right">
+                                <a href="{% url 'about' %}" class="hamburger-toggle" data-toggle-class="#menu1;hidden-xs hidden-sm"> <i class="fa fa-bars" aria-hidden="true"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav id="menu1" class="bar bar-1 hidden-xs bar--absolute bar--transparent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1 col-sm-2 hidden-xs">
+                                <div class="bar__module">
+                                    <a href="/"> <img class="logo logo-dark logo-resize" alt="logo" src="{% static 'image/bnw.png' %}" style="width:125px;"> <img class="logo logo-light logo-resize" alt="logo" style="width:125px;" src="{% static 'image/logotulisan2.png' %}"> </a>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right text-left-xs text-left-sm col-md-11">
+                                <div class="bar__module">
+                                    <ul class="menu-horizontal text-left">
+                                        <li> <a href="{% url 'about' %}">
+                                        ABOUT</a> </li>
+                                        <li> <a href="{% url 'kelas:search' %}">
+                                        CLASSES</a> </li>
+                                    </ul>
+                                </div>
+                                <div class="bar__module">
+                                    <a class="btn btn-round btn--sm type--uppercase" href="{% url 'accounts:signup' %}"> <span class="btn__text">
+                                    Sign up</span> </a>
+                                    <a class="btn btn-round btn-cust-2 btn--sm btn--primary type--uppercase" href="{% url 'accounts:login' %}"> <span class="btn__text">
+                                    Sign in
+                                </span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    {% block content %}
+    {% endblock %}
+
+            <footer class="footer-7 text-center-xs bg--dark">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6"> <span class="type--fine-print">© <span class="update-year">2017</span> lnpoint, inc — All Rights Reserved</span>
+                        </div>
+                        <div class="col-sm-6 text-right text-center-xs">
+                            <ul class="social-list list-inline">
+                                <!-- li><a href="#"><i class="socicon socicon-google icon icon--xs"></i></a></li>
+                                <li><a href="#"><i class="socicon socicon-twitter icon icon--xs"></i></a></li>
+                                <li><a href="#"><i class="socicon socicon-facebook icon icon--xs"></i></a></li-->
+                                <li><a href="https://line.me/R/ti/p/%40unl0998g"><i class="socicon socicon-line icon icon--xs"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{% static 'js/index/parralax.js' %}"></script>
+        <script src="{% static 'js/index/granim.min.js' %}"></script>
+        <script src="{% static 'js/index/scripts.js' %}"></script>
+        {% block js %}{% endblock js %}
+        <script src="{% static 'js/index/smooth-scroll.min.js' %}"></script>
+        <script src="{% static 'js/index/countdown.min.js' %}"></script>
+
+    </body>
+
+</html>
