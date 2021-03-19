@@ -9,7 +9,7 @@ django-autoslug==1.9.3
 django-bmemcached==0.2.3
 django-mobile==0.7.0
 django-storages==1.6.5
-djangorestframework==3.7.1
+djangorestframework==3.11.2
 djangorestframework-camel-case==0.2.0
 djangorestframework-jwt==1.11.0
 gunicorn==19.7.1
